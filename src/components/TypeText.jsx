@@ -85,7 +85,7 @@ export default function TypeText(props) {
       </span>
     }
   
-      return <div className='md:p-32'>
+      return <div className=''>
         <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 absolute inline-block max-w-7xl intro-width-fix'>{displayedText}</p>
         <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 inline-block invisible max-w-7xl'>{generateHiddenTextPreventCLS()}</p>
       </div>
