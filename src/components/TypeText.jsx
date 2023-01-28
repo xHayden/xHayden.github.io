@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import useWindowSize from "../utils/useWindowSize";
 
 export default function TypeText(props) {
     const [wordSpeaking, setWordSpeaking] = useState(0);
@@ -7,6 +8,10 @@ export default function TypeText(props) {
     const [displayedText, setDisplayedText] = useState();
     const [paused, setPaused] = useState(props.start == undefined ? false : !props.start);
     const typedText = props.text;
+    const typingRef = useRef();
+    const [textWidth, setTextWidth] = useState(0);
+    const [textHeight, setTextHeight] = useState(0);
+    const size = useWindowSize();
   
     useEffect(() => {
       if (!paused) {
@@ -19,6 +24,13 @@ export default function TypeText(props) {
     useEffect(() => {
         if (props.start !== undefined) setPaused(!props.start);
     }, [props.start])
+
+    useEffect(() => {
+        if (typingRef.current) {
+            setTextWidth(typingRef.current.clientWidth);
+            setTextHeight(typingRef.current.clientHeight);
+        }
+    }, [size, typingRef.current])
   
     useEffect(() => {
       setWordSpeaking(0);
@@ -35,7 +47,7 @@ export default function TypeText(props) {
           {el.text}
         </span>
       });
-      textElements.push(<span key="|">|</span>);
+      textElements.push(<span key="_">|</span>);
       return <span>
         {textElements}
       </span>
@@ -71,9 +83,9 @@ export default function TypeText(props) {
         }
       }
       if (wordSpeaking == typedText.length) {
-        wordsToRender.push({ class: [], text: (timer % 16 > 8) ? "" : "|" });
+        wordsToRender.push({ class: [], text: (timer % 20 > 10 && props.blinkingCursor != false) ? "_" : "" });
       } else {
-        wordsToRender.push({ class: [], text: "|" });
+        wordsToRender.push({ class: [], text: "_" });
       }
       let textElements = wordsToRender.map((el, index) => {
         return <span className={el.class} key={index}>
@@ -86,7 +98,7 @@ export default function TypeText(props) {
     }
   
       return <div className=''>
-        <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 absolute inline-block max-w-7xl intro-width-fix'>{displayedText}</p>
-        <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 inline-block invisible max-w-7xl'>{generateHiddenTextPreventCLS()}</p>
+        <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 absolute inline-block max-w-7xl' style={{width: textWidth, height: textHeight}}>{displayedText}</p>
+        <p className='text-3xl md:text-5xl xl:text-6xl font-bold py-4 max-w-7xl invisible' ref={typingRef}>{generateHiddenTextPreventCLS()}</p>
       </div>
   }

@@ -1,23 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-
-function useWindowSize() {
-    const [windowSize, setWindowSize] = useState({
-      width: undefined,
-      height: undefined,
-    });
-    useEffect(() => {
-      function handleResize() {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }, []); 
-    return windowSize;
-}
+import useWindowSize from '../utils/useWindowSize';
 
 function Tag(props) {
     return <div className='px-2 py-1 rounded-3xl w-max text-sm lg:text-base text-zinc-900 font-bold' style={{"backgroundColor": props.color}}>
@@ -27,22 +9,31 @@ function Tag(props) {
 
 export default function Experiences() {
     const experiences = {
-        "Axio 360": {role: "Software Development Intern", timeStarted:new Date("2021-04-01"), timeEnded:new Date("2022-04-02"), description: 
+        "Axio Global Inc": {role: "Software Development Intern", timeStarted:new Date("2021-04-01"), timeEnded:new Date("2022-04-02"), description: 
             <>
                 <p>Worked closely with the software development team at Axio Global to develop the Axio 360 Cyber Risk Assessment web application from April 2021 to April 2022.</p>
                 <div className='flex gap-2 whitespace-pre break-words flex-wrap'>
                     <Tag label="TypeScript" color="white"/>
+                    <Tag label="JavaScript" color="white"/>
                     <Tag label="Python" color="white"/>
                     <Tag label="React" color="white"/>
                     <Tag label="GraphQL" color="white"/>
                     <Tag label="Cypress" color="white"/>
+                    <Tag label="Playwright" color="white"/>
+                    <Tag label="Azure DevOps" color="white"/>
                 </div>
             </>
         },
         "BitsOfGood": {role: "Developer", timeStarted:new Date("2023-01-24"), timeEnded:new Date("2031-04-02"), description: 
             <>
-                <p>Working on the <span className='font-bold'>Southface</span> project team to create a building planner for <span className='font-bold'>Earthcraft</span>, a sustainable housing program.</p>
+                <p>Working on the <a className='font-bold' href="https://www.southface.org/">Southface</a> project team to create a building planner for <a className='font-bold' href="https://earthcraft.org/">Earthcraft</a>, a sustainable housing program.</p>
                 <p>Southface has estimated the app should improve use of Earthcraft's resources by up to 50%.</p>
+                <div className='flex gap-2 whitespace-pre break-words flex-wrap'>
+                    <Tag label="JavaScript" color="white"/>
+                    <Tag label="Next.js" color="white"/>
+                    <Tag label="React" color="white"/>
+                    <Tag label="MongoDB" color="white"/>
+                </div>
             </>},
         "GT WebDev": {role: "Member", timeStarted:new Date("2022-09-01"), timeEnded:new Date("2022-12-15"), description:
             <>
@@ -56,16 +47,19 @@ export default function Experiences() {
                 </div>
             </> 
             },
-        "Stork Race @ GT": {role: "Officer", timeStarted:new Date("2023-01-01"), timeEnded:new Date("2030-01-01"), description: 
-            <>
-                <p>
-                    Primary contributor to the UI interaces used to access stork tracking data and statistics.<br></br>
-                </p>
-                <p>
-                    Helps plan marketing meetings and materials, including events.
-                </p>
-            </>
-        },
+        // "Stork Race @ GT": {role: "Officer", timeStarted:new Date("2023-01-01"), timeEnded:new Date("2030-01-01"), description: 
+        //     <>
+        //         <p>
+        //             Primary contributor to the UI interaces used to access stork tracking data and statistics.<br></br>
+        //         </p>
+        //         <p>
+        //             Helps plan marketing meetings and materials, including events.
+        //         </p>
+        //         <div className='flex gap-2 whitespace-pre break-words flex-wrap'>
+        //             <Tag label="JavaScript" color="white"/>
+        //         </div>
+        //     </>
+        // },
         "FRC Team 4026": {role: "Programming/Scouting Lead", timeStarted:new Date("2019-08-01"), timeEnded:new Date("2022-04-01"), description: 
             <>
                 <p>
@@ -95,7 +89,8 @@ export default function Experiences() {
     const size = useWindowSize();
     const [experienceArray, setExperienceArray] = useState(
         Object.keys(experiences).sort((a, b) => {
-            return experiences[a].timeEnded < experiences[b].timeEnded ? 1 : -1;
+            return 0;
+            // return experiences[a].timeEnded < experiences[b].timeEnded ? 1 : -1;
         })
     );
     const [selected, setSelected] = useState(experienceArray[0]);
@@ -122,7 +117,7 @@ export default function Experiences() {
         setTimeEnded(experiences[selected].timeEnded);
     }, [selected])
 
-    return (size.width > 640 ? <div className='flex text-2xl xl:text-6xl mx-8 lg:mx-16 flex-col gap-8 xl:mx-32 border-b-0' id="Experience">
+    return (size.width > 640 ? <div className='flex text-2xl xl:text-6xl flex-col gap-8 border-b-0' id="Experience">
         <div className='flex gap-6 flex-col sm:flex-row'>
         <div className='flex gap-6 flex-col'>
             <h2 className='text-4xl border-zinc-300 border-8 p-4 text-zinc-300 w-max xl:text-5xl 2xl:text-6xl px-2 font-bold' id="experience-title">Experience</h2>
@@ -171,7 +166,7 @@ function ExperienceObject(props) {
 function MobileExperiences(props) {
     return <div className=''>
         <div className='flex flex-col items-center'>
-            <h2 className='text-3xl bg-zinc-300 text-zinc-900 w-max py-2 my-6 px-4 font-bold' id="experience-title">Experience</h2>
+            <h2 className='text-3xl bg-zinc-300 text-zinc-900 w-max py-2 my-2 px-4 font-bold' id="experience-title">Experience</h2>
         </div>
         { Object.keys(props.experiences).map((key) => {
             return <MobileExperienceObject key={key} title={key} role={props.experiences[key].role} description={props.experiences[key].description}/>

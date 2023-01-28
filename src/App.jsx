@@ -18,10 +18,10 @@ function App() {
 
 
   return (
-    <div className="bg-zinc-900 text-zinc-300 min-h-screen">
+    <div className="bg-zinc-900 text-zinc-300 min-h-screen sm:p-8 p-8 md:px-32 2xl:px-64">
       {/* <Navbar/> */}
       <div id="main-page">
-        <div className='md:p-36 sm:p-8 p-8 py-32 sm:py-auto'>
+        <div className='py-32 sm:py-auto'>
             <TypeText text={[
               {class: [], text: "Hi, I'm "},
               {class: ['text-amber-400'], text: "Hayden Carpenter"},
@@ -35,15 +35,12 @@ function App() {
         <div className="">
             <Experiences/>
         </div>
-        <div ref={projectsTypeTextRef} className='px-32 py-8'>
+        <div ref={projectsTypeTextRef} className='pb-4 pt-16'>
             <TypeText start={scrolledToProjects} text={[
-              {class: [], text: "Some of the projects I've worked on..."}
-            ]}/>
+              {class: [], text: "Some of the projects I've worked on:"}
+            ]} blinkingCursor={false}/>
         </div>
         <div className="">
-            <Experiences/>
-        </div>
-        <div>
             <Projects/>
         </div>
           <Contacts/>

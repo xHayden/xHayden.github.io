@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (min-width: 768px) {
-    .intro-width-fix {
-        width: calc(100vw - 16rem - 2rem)
-    }
+.vignette { 
+    box-shadow: inset 0px -80px 150px 0px black;
 }
