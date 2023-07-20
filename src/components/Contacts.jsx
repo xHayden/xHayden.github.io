@@ -8,7 +8,7 @@ export default function(props) {
             <a href="https://github.com/xHayden" target="_blank" className="transform-gpu hover:scale-125 transition ease-in-out"><SiGithub size={"2em"}/></a>
             <a href="https://www.linkedin.com/in/haydencarpenter/" target="_blank" className="transform-gpu hover:scale-125 transition ease-in-out"><SiLinkedin size={"2em"}/></a>
             <a href="mailto:haydenc@gatech.edu" target="_blank" className="transform-gpu hover:scale-125 transition ease-in-out"><IoMdMailOpen size={"2em"}/></a>
-            <a href="https://hayden.gg/resume" target="_blank" className="transform-gpu hover:scale-125 transition ease-in-out"><FaFileAlt size={"2em"}/></a>
+            <a href="https://hayden.gg/resume/HaydenCarpenter_Resume.pdf" target="_blank" className="transform-gpu hover:scale-125 transition ease-in-out"><FaFileAlt size={"2em"}/></a>
         </div>
     </div>
 }

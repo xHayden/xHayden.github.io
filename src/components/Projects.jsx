@@ -18,10 +18,10 @@ function Project(props) {
 export default function Projects(props) {
     return <>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 3xl:grid-cols-6">
-            <Project name="Physarum Simulation" description="A modified WebGL simulation of a slime mold to demonstrate evolutionary pathfinding." imgSrc={physarum} href="https://github.com/xHayden/physarum"/>
+            <Project name="Physarum Simulation" description="Research using a modified WebGL simulation of a slime mold to demonstrate evolutionary pathfinding." imgSrc={physarum} href="https://hayden.gg/physarum/"/>
             <Project name="Gearbox" description="An all-in-one live-updating data collection and analysis tool for FRC Robotics teams built by Team 4026." imgSrc="gearbox.png" href="https://4026.org"/>
             <Project name="Earthcraft" description="An environmentally sustainable building standard planning tool for Southface." imgSrc={southface} href="https://github.com/GTBitsOfGood/southface"/>
-            <Project name="Stork.gt" description="Creating systems for Stork Race @ GT, a Fantasy Football-style stork migration club at Georgia Tech." imgSrc={cat} href="https://stork.gt"/>
+            {/* <Project name="Stork.gt" description="Creating systems for Stork Race @ GT, a Fantasy Football-style stork migration club at Georgia Tech." imgSrc={cat} href="https://stork.gt"/> */}
             <Project name="Other Projects..." description="See more on my Github." imgSrc={hayden2} href="https://github.com/xHayden/" center={true}/>
         </div>
     </>
