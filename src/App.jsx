@@ -62,7 +62,7 @@ function App() {
             <Projects/>
         </div>
         <div className='flex mt-8 2xl:mt-32 font-thin text-xl'>
-          <a>Hayden Carpenter © {new Date().getFullYear().toString()}</a>
+          <p>Hayden Carpenter © {new Date().getFullYear().toString()}</p>
         </div>
           <Contacts/>
       </div>
