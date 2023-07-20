@@ -8,13 +8,20 @@ module.exports = {
     extend: {
       screens: {
         '3xl': '2200px'
-      }
+      },
+      colors: {
+        transparent: 'transparent',
+        primary: '#262626',
+        secondary: '#fbbf24',
+        primarytext: "#f1f5f9",
+        primarytextdark: "#f1f5f9",
+        buttonborder: "#fcd34d"
+      },
     },
   },
   plugins: [],
   safelist: [
-    'text-zinc-600',
-    'text-zinc-100',
-    'text-amber-400'
+    'text-primary',
+    'text-secondary'
   ]
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import useWindowSize from '../utils/useWindowSize';
 
 function Tag(props) {
-    return <div className='px-2 py-1 rounded-3xl w-max text-sm lg:text-base text-zinc-900 font-bold' style={{"backgroundColor": props.color}}>
+    return <div className='px-2 py-1 rounded-3xl w-max text-sm lg:text-base text-primarytext font-semibold border-2 border-buttonborder'>
         {props.label}
     </div>
 }
@@ -24,10 +24,10 @@ export default function Experiences() {
                 </div>
             </>
         },
-        "BitsOfGood": {role: "Developer", timeStarted:new Date("2023-01-24"), timeEnded:new Date("2031-04-02"), description: 
+        "BitsOfGood": {role: "Senior Developer", timeStarted:new Date("2023-01-24"), timeEnded:new Date("2031-04-02"), description: 
             <>
                 <p>Working on the <a className='font-bold' href="https://www.southface.org/">Southface</a> project team to create a building planner for <a className='font-bold' href="https://earthcraft.org/">Earthcraft</a>, a sustainable housing program.</p>
-                <p>Southface has estimated the app should improve use of Earthcraft's resources by up to 50%.</p>
+                <p>Southface has estimated the app should improve the use of Earthcraft's resources by up to 50%.</p>
                 <div className='flex gap-2 whitespace-pre break-words flex-wrap'>
                     <Tag label="JavaScript" color="white"/>
                     <Tag label="Next.js" color="white"/>
@@ -50,7 +50,7 @@ export default function Experiences() {
         // "Stork Race @ GT": {role: "Officer", timeStarted:new Date("2023-01-01"), timeEnded:new Date("2030-01-01"), description: 
         //     <>
         //         <p>
-        //             Primary contributor to the UI interaces used to access stork tracking data and statistics.<br></br>
+        //             secondary contributor to the UI interaces used to access stork tracking data and statistics.<br></br>
         //         </p>
         //         <p>
         //             Helps plan marketing meetings and materials, including events.
@@ -119,9 +119,9 @@ export default function Experiences() {
 
     return (size.width > 640 ? <div className='flex text-2xl xl:text-6xl flex-col gap-8 border-b-0' id="Experience">
         <div className='flex gap-6 flex-col sm:flex-row'>
-        <div className='flex gap-6 flex-col'>
-            <h2 className='text-4xl border-zinc-300 border-8 p-4 text-zinc-300 w-max xl:text-5xl 2xl:text-6xl px-2 font-bold' id="experience-title">Experience</h2>
-            <ul className='w-full font-bold'>
+        <div className='flex gap-2 flex-col'>
+            <h2 className='text-4xl border-primarytext text-primarytext w-max xl:text-4xl 2xl:text-4xl border-b-2' id="experience-title">Work Experience</h2>
+            <ul className='w-full font-normal'>
             {experienceArray.map((key) => {
                 return <ExperienceObject key={key} title={key} description={experiences[key]} setSelected={setSelected} selected={selected}/>
             })}
@@ -137,12 +137,12 @@ export default function Experiences() {
 }
 
 function ExperienceFrame(props) {
-    return <div ref={props.frameRef ? props.frameRef : undefined} className={`w-full p-2 pt-0 lg:p-8 lg:pt-0 border-zinc-300 border-0 text-zinc-300 flex flex-col gap-2 lg:gap-4 ${props.absolute ? "absolute" : "inline-block invisible"}`} style={props.absolute ? {"width": props.frameWidth} : {}}>
-        <div className='border-b-4 rounded-sm border-0 border-amber-400 px-0 pb-2 break-words w-full'>
-            <h3 className='sm:text-2xl md:text-4xl xl:text-5xl font-bold'>{props.role}</h3>
-            <h4 className='text-md sm:text-xl md:text-2xl xl:text-3xl font-normal'>{props.timeStarted.getUTCFullYear()} - {props.timeEnded < new Date() ? props.timeEnded.getUTCFullYear() : "Current"}</h4>
+    return <div ref={props.frameRef ? props.frameRef : undefined} className={`w-full p-2 pt-0 lg:p-8 lg:pt-0 border-primarytext border-0 text-primarytext flex flex-col gap-2 lg:gap-4 ${props.absolute ? "absolute" : "inline-block invisible"}`} style={props.absolute ? {"width": props.frameWidth} : {}}>
+        <div className='border-b-4 rounded-sm border-0 border-secondary px-0 pb-2 break-words w-full'>
+            <h3 className='sm:text-2xl md:text-4xl xl:text-4xl textSlightlyLarger'>{props.role}</h3>
+            <h4 className='text-md sm:text-xl md:text-2xl xl:text-3xl font-thin'>{props.timeStarted.getUTCFullYear()} - {props.timeEnded < new Date() ? props.timeEnded.getUTCFullYear() : "Current"}</h4>
         </div>
-        <div className="text-lg sm:text-2xl md:text-2xl xl:text-3xl leading-normal overscroll-contain overflow-x-auto overflow-y-auto gap-4 flex flex-col">{props.description}</div>
+        <div className="text-lg sm:text-2xl md:text-2xl xl:text-3xl leading-normal font-thin overscroll-contain overflow-x-auto overflow-y-auto gap-4 flex flex-col">{props.description}</div>
     </div>
 }
 
@@ -158,16 +158,13 @@ function ExperienceObject(props) {
     
     return (
     <div>
-        <li className={`transform-gpu cursor-pointer ease-in-out transition text-xl sm:text-xl md:text-2xl 2xl:text-3xl hover:scale-105 ${props.selected == props.title ? "translate-x-4 md:translate-x-6 lg:translate-x-10 text-amber-400 list-disc" : "text-zinc-300"}`} onClick={handleClick}>{props.title}</li>
+        <li className={`transform-gpu cursor-pointer ease-in-out transition text-xl sm:text-xl md:text-2xl 2xl:text2xl font-normal hover:scale-105 ${props.selected == props.title ? "translate-x-4 md:translate-x-6 lg:translate-x-10 text-secondary list-disc" : "text-primarytext"}`} onClick={handleClick}>{props.title}</li>
     </div>
     )
 }
 
 function MobileExperiences(props) {
     return <div className=''>
-        <div className='flex flex-col items-center'>
-            <h2 className='text-3xl bg-zinc-300 text-zinc-900 w-max py-2 my-2 px-4 font-bold' id="experience-title">Experience</h2>
-        </div>
         { Object.keys(props.experiences).map((key) => {
             return <MobileExperienceObject key={key} title={key} role={props.experiences[key].role} description={props.experiences[key].description}/>
         })}
@@ -175,9 +172,9 @@ function MobileExperiences(props) {
 }
 
 function MobileExperienceObject(props) {
-    return <div className='flex p-4 flex-col gap-2'>
+    return <div className='flex flex-col gap-2'>
         <div className='flex-col flex p-2 gap-2'>
-            <h3 className='text-2xl sm:text-2xl md:text-4xl xl:text-5xl 2xl:text-6xl font-bold'><span className='text-amber-400'>{props.title}</span> - {props.role}</h3>
+            <h3 className='text-2xl sm:text-2xl md:text-4xl xl:text-5xl 2xl:text-6xl font-bold'><span className='text-secondary'>{props.title}</span> - {props.role}</h3>
             <div className='flex flex-col gap-4'>{props.description}</div>
         </div>
     </div>

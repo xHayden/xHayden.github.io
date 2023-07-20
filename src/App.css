@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 .vignette { 
-    box-shadow: inset 0px -80px 150px 0px black;
+    box-shadow: inset 0px -80px 150px 40px black;
+}
+
+@media screen and (min-width: 1280) {
+    .textSlightlyLarger { 
+        font-size: 2.5rem;
+    }
 }
