@@ -1,1 +1,1 @@
-/blog/* https://blog.hayden.gg/:splat 200
+/blog/*  https://blog.hayden.gg/blog/:splat  200
