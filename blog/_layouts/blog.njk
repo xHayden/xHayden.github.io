@@ -3,12 +3,12 @@ layout: base
 permalink: "{{ slug | slugify | url }}/"
 ---
 <div class="border-b-2 mb-8 pb-2">
-    <h1 class="text-amber-400 text-5xl pb-2">{{title}}</h1>
+    <h1 class="text-amber-400 text-3xl md:text-4xl xl:text-5xl pb-2">{{title}}</h1>
     <div class="flex justify-between flex-col gap-2">
-        <p class="text-xl font-extralight">{{description}}</p>
+        <p class="text-lg md:text-xl font-extralight">{{description}}</p>
         <div>
-            <p class="text-base">By Hayden Carpenter</p>
-            <p class="text-sm">{{date | postDate }}</p>
+            <p class="text-sm md:text-base">By Hayden Carpenter</p>
+            <p class="text-xs md:text-sm">{{date | postDate }}</p>
         </div>
     </div>
 </div>

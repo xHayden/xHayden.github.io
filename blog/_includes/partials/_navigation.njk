@@ -1,5 +1,6 @@
 <nav>
-    {%- for item in collections.navitem -%}
+    {% set sortedNavItems = collections.navitem | sort(attribute='data.order') %}
+    {% for item in sortedNavItems %}
         <a href="{{ item.url | urlPrefix | url }}">{{ item.data.title }}</a>
-    {%- endfor -%}
+    {% endfor %}
 </nav>
