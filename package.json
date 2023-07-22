@@ -2,28 +2,42 @@
   "name": "haydengg",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "npm-run-all -p dev:*",
+    "build": "cross-env DEPLOYMENT=prod run-s build:*",
+    "dev:11ty": "eleventy --watch",
+    "dev:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --watch --postcss",
+    "dev:server": "node express.js",
+    "dev": "run-p dev:*",
+    "build:11ty": "eleventy",
+    "build:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --postcss",
+    "build:vite": "vite build --outDir build/_site",
+    "build:merge": "mkdir build/_site/blog/ && shx mv _site_blog/* build/_site/blog/"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
     "@types/three": "^0.146.0",
     "animejs": "^3.2.1",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "three": "^0.147.0"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react-swc": "^3.0.0",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.20",
-    "tailwindcss": "^3.2.4",
+    "autoprefixer": "^10.4.14",
+    "browser-sync": "^2.29.3",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.26",
+    "shx": "^0.3.4",
+    "tailwindcss": "^3.3.3",
     "vite": "^4.0.0"
   }
 }

@@ -1,0 +1,16 @@
+---
+layout: base
+permalink: "{{ slug | slugify | url }}/"
+---
+<div class="border-b-2 mb-8 pb-2">
+    <h1 class="text-amber-400 text-5xl pb-2">{{title}}</h1>
+    <div class="flex justify-between flex-col gap-2">
+        <p class="text-xl font-extralight">{{description}}</p>
+        <div>
+            <p class="text-base">By Hayden Carpenter</p>
+            <p class="text-sm">{{date | postDate }}</p>
+        </div>
+    </div>
+</div>
+{{content| safe}}
+{% include "partials/_paginate.njk" %}

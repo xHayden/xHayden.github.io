@@ -1,0 +1,10 @@
+{% set previous = collections.post | getPreviousCollectionItem(page) %}
+{% set next = collections.post | getNextCollectionItem(page) %}
+{% if previous %}
+    Previous: <a href="{{ previous.url | urlPrefix | url }}">{{ previous.data.title }}</a>
+{% endif %}
+<br>
+{% if next %}
+    Next: <a href="{{ next.url | urlPrefix | url }}">{{ next.data.title }}</a>
+{% endif %}
+<br>

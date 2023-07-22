@@ -1,0 +1,5 @@
+<nav>
+    {%- for item in collections.navitem -%}
+        <a href="{{ item.url | urlPrefix | url }}">{{ item.data.title }}</a>
+    {%- endfor -%}
+</nav>
