@@ -1,11 +1,11 @@
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const includesFilter = require("./blog/includes");
 
 module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy("blog/assets/images/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/themes/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/main.css");
-    eleventyConfig.addPassthroughCopy({ "robots.txt": "/robots.txt" });
 
     eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -49,6 +49,8 @@ module.exports = (eleventyConfig) => {
         return a.data.o - b.data.o;
       });
     });
+
+    eleventyConfig.addFilter('has_tag', includesFilter);
 
     return {
       dir: {

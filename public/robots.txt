@@ -1,0 +1,6 @@
+Host: https://hayden.gg
+User-agent: *
+Disallow: 
+
+Sitemap: https://hayden.gg/sitemap.xml
+Sitemap: https://hayden.gg/blog/sitemap.xml

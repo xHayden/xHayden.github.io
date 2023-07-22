@@ -18,7 +18,12 @@
                 {{site.description}}
             {% endif %}
         "/>
-        <title>{{title}}</title>
+        <title>
+            {% if tags | has_tag(tags, "page") %}
+                Hayden Carpenter | 
+            {% endif %}
+            {{title}}
+        </title>
     </head>
     <body>
         {% include "partials/_navigation.njk" %}
