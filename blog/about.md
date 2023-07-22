@@ -5,6 +5,7 @@ tags:
     - navitem
     - page
 o: 2
+description: I'm Hayden Carpenter. I'm an undergraduate student at The Georgia Institute of Technology in Atlanta, Georgia...
 ---
 
 {% headers "About", ""%}
