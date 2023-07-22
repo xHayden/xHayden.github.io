@@ -4,7 +4,7 @@ title: Contact
 tags:
     - navitem
     - page
-order: 3
+o: 3
 ---
 
 {% headers "Contact", ""%}

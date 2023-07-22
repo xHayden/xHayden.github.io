@@ -4,7 +4,7 @@ title: About
 tags:
     - navitem
     - page
-order: 1
+o: 2
 ---
 
 {% headers "About", ""%}

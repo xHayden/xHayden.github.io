@@ -44,6 +44,12 @@ module.exports = (eleventyConfig) => {
       return url.startsWith('/blog/') ? url : `/blog/${url}`;
     });
 
+    eleventyConfig.addCollection("sortedNavItems", function(collectionApi) {
+      return collectionApi.getFilteredByTag("navitem").sort(function(a, b) {
+        return a.data.o - b.data.o;
+      });
+    });
+
     return {
       dir: {
         input: "blog",
