@@ -25,16 +25,28 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addShortcode(
         "currentDate",
         () => {
-            return DateTime.now();
+            return DateTime.utc().toISODate();
         }
     );
 
     eleventyConfig.addFilter(
         "postDate",
         (date) => {
-            return DateTime.fromJSDate(date).toLocaleString(DateTime.DATE_MED);
+            return DateTime.fromJSDate(date, { zone: 'utc' }).toLocaleString(DateTime.DATE_MED);
         }
     );
+
+    eleventyConfig.addFilter(
+      "sitemapDate",
+      (date) => {
+        var d = new Date();
+        var msSinceMidnight = date - d.setHours(0,0,0,0);
+        if (msSinceMidnight > 0) {
+          // console.log(date.toLocaleString()) // I give up
+        }
+        return DateTime.fromJSDate(date, { zone: 'utc' }).toISODate();
+      }
+  );
 
     eleventyConfig.addFilter('imageUrl', (slug, filename) => {
       return `/blog/assets/images/${slug}/${filename}`;

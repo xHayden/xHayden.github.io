@@ -3,11 +3,15 @@ permalink: "/sitemap.xml"
 eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="utf-8"?>
-<urlset xmlns="http://sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9/">
     {% for page in collections.all %}
         <url>
             <loc>https://hayden.gg/blog{{page.url}}</loc>
-            <lastmod>{% currentDate date %}</lastmod>
+            {% if page.date %}
+                <lastmod>{{ page.date | sitemapDate }}</lastmod>
+            {% else %}
+                <lastmod>{{ currentDate | sitemapDate }} s</lastmod>
+            {% endif %}
         </url>
     {% endfor %}
 </urlset>
