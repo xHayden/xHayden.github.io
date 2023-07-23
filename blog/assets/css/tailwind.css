@@ -7,11 +7,15 @@
         @apply bg-zinc-100 dark:bg-zinc-900 dark:text-white text-zinc-900;
         @apply xl:mx-64 flex justify-center flex-col items-center;
     }
-    p {
-        line-height: 1.75;
-        @apply text-base md:text-xl font-serif text-stone-200;
+    p, li {
+        @apply text-base md:text-lg font-serif text-stone-200;
     }
-    main {
+    h1, h2, h3, h4 {
+        margin-top: 1em;
+        margin-bottom: 0.25em;
+    }
+    p, ul, ol {
+        margin-bottom: 1em;
     }
     h1 {
         @apply text-2xl md:text-3xl;
@@ -25,29 +29,32 @@
     h4 {
         @apply text-lg;
     }
-    h1, h2, h3, h4, p, pre, img {
-        margin-bottom: 0.5em;
+    h1, h2, h3, h4, p, pre, img, ol, ul, blockquote {
+        line-height: 1.5em;
     }
     pre {
         @apply my-8 !important;
     }
-    pre code, pre {
+    pre code, pre, code {
         @apply text-sm md:text-base !important;
     }
+    code {
+        @apply text-amber-400;
+    }
     h1, h2, h3 {
-        @apply font-bold text-amber-300;
+        @apply font-bold text-amber-400;
     }
     blockquote {
-        @apply p-4 my-4 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-200 dark:bg-syntax-bg-grey;
+        @apply px-4 py-2 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-200 dark:bg-syntax-bg-grey rounded-r-lg;
     }
     blockquote p {
-        @apply text-xl italic font-medium leading-relaxed text-zinc-900 dark:text-white;
+        @apply m-0 font-medium leading-relaxed text-zinc-900 dark:text-white;
     }
     ul {
         @apply list-disc list-inside;
     }
     ul li {
-        @apply  pl-4;
+        @apply pl-4;
     }
     ol {
         @apply list-decimal list-inside;
@@ -59,7 +66,7 @@
         @apply dark:text-amber-200 text-blue-800;
     }
     nav {
-        @apply flex justify-start gap-4 py-8;
+        @apply flex justify-start gap-4 py-6;
     }
     main, nav {
         @apply w-11/12 xl:w-3/4 2xl:w-1/2; 

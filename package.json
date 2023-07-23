@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "npm-run-all -p dev:*",
+    "start": "npm run dev",
     "build": "cross-env DEPLOYMENT=prod run-s build:*",
     "dev:11ty": "eleventy --watch",
     "dev:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --watch --postcss",
-    "dev:server": "node express.js",
-    "dev": "run-p dev:*",
+    "dev:server": "node dev-server.js",
+    "dev": "npx tinacms dev -c 'npm run dev-link'",
+    "dev-link": "run-p dev:*",
     "build:11ty": "eleventy",
     "build:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --postcss",
     "build:vite": "vite build --outDir build/_site",
@@ -16,14 +17,17 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
+    "@tinacms/cli": "^1.5.26",
     "@types/three": "^0.146.0",
     "animejs": "^3.2.1",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "three": "^0.147.0"
+    "three": "^0.147.0",
+    "tinacms": "^1.5.17"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",

@@ -6,6 +6,7 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy("blog/assets/images/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/themes/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/main.css");
+    eleventyConfig.addPassthroughCopy("blog/admin/");
 
     eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -18,8 +19,8 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addShortcode(
         "headers",
         (title, subtitle) =>
-          `<h1>${title}</h1>
-            <p>${subtitle}</p>`
+          `<h1 class="m-0 p-0 leading-none">${title}</h1>
+            <p class="">${subtitle}</p>`
     );
 
     eleventyConfig.addShortcode(
@@ -60,6 +61,11 @@ module.exports = (eleventyConfig) => {
       return collectionApi.getFilteredByTag("navitem").sort(function(a, b) {
         return a.data.o - b.data.o;
       });
+    });
+
+    eleventyConfig.addFilter("sortByDate", (values) => {
+      let vals = [...values];
+      return vals.sort((a, b) => Math.sign(b.data.date - a.data.date));
     });
 
     eleventyConfig.addFilter('has_tag', includesFilter);
