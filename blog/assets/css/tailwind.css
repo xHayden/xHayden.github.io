@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-zinc-100 dark:bg-zinc-900 dark:text-white text-zinc-900;
+        @apply bg-zinc-900 text-white ;
         @apply xl:mx-64 flex justify-center flex-col items-center;
     }
     p, li {
@@ -45,10 +45,10 @@
         @apply font-bold text-amber-400;
     }
     blockquote {
-        @apply px-4 py-2 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-200 dark:bg-syntax-bg-grey rounded-r-lg;
+        @apply px-4 py-2 border-l-4  border-gray-200 bg-syntax-bg-grey rounded-r-lg;
     }
     blockquote p {
-        @apply m-0 font-medium leading-relaxed text-zinc-900 dark:text-white;
+        @apply m-0 font-medium leading-relaxed text-white;
     }
     ul {
         @apply list-disc list-inside;
@@ -63,7 +63,7 @@
         @apply pl-4;
     }
     a {
-        @apply dark:text-amber-200 text-blue-800;
+        @apply text-amber-200;
     }
     nav {
         @apply flex justify-start gap-4 py-6;
@@ -72,6 +72,6 @@
         @apply w-11/12 xl:w-3/4 2xl:w-1/2; 
     }
     nav a {
-        @apply dark:text-amber-400 text-blue-800;
+        @apply text-amber-400;
     }
 }
