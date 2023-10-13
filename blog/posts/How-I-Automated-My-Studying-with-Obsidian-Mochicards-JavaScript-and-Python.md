@@ -12,7 +12,7 @@ tags:
   - Python
   - Mochi.cards
   - Obsidian
-slug: automate-notetaking-flashcards
+slug: automate-notetaking-obsidian-mochi
 ---
 
 Beginning my fall semester in my freshman year of college, I was having a hard time adjusting to note-taking. I needed a workflow that supported the speed I heard information and my need to study it. My previous routine either left me without reliable notes or without an efficient way to review the material. To deal with this, I looked for alternatives.
