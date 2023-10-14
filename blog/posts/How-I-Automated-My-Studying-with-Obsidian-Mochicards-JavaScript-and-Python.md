@@ -54,7 +54,7 @@ I'm still working on the plugin, but if you want to check it out [it's on my Git
 
 Obsidian is almost entirely run locally, so uploading images just saves them to your Obsidian vault. It doesn't create a url on Obsidian's servers like Notion does. So, if I take a screenshot and want it in my flashcards, I have to find a URL that hosts that image.
 
-One of the more annoying things about MacOS, coming from Windows, is that the screenshot utilities are just not as good as [ShareX](https://getsharex.com/). A few years ago, I wrote code for a custom image hosting endpoint at [img.hayden.gg](img.hayden.gg). ShareX allows me to take screenshots and automatically send them to my image server to be processed and then sends me back the image url as a response. Isn't that amazing? As far as I can tell, there's no MacOS app that does quite the same for free. But that's exactly what I need!
+One of the more annoying things about MacOS, coming from Windows, is that the screenshot utilities are just not as good as [ShareX](https://getsharex.com/). A few years ago, I wrote [code for a custom image hosting endpoint](https://github.com/xHayden/lightweight-img-host) at [img.hayden.gg](img.hayden.gg). ShareX allows me to take screenshots and automatically send them to my image server to be processed and then sends me back the image url as a response. Isn't that amazing? As far as I can tell, there's no MacOS app that does quite the same for free. But that's exactly what I need!
 
 So, to deal with this issue, I thought of an alternative. I could just use a quick script to read my screenshots folder and upload whatever's there to my image server! I asked ChatGPT to write a script to do just that and it worked (after some trial and error). Now, all I have to do is take a screenshot with the default MacOS screenshot utility and the URL is sent to my clipboard. Yay!
 
@@ -62,7 +62,7 @@ Now, I simply take a screenshot, the url gets added to my clipboard, and I add t
 
 ![Image upload to clipboard](https://img.hayden.gg/2332c5b9bc331ba80db482f0abf57821.gif)
 
-The server code and script code will be published here once I make it presentable 🤪
+[MacOS Screenshot Script](https://github.com/xHayden/lightweight-img-host/blob/main/screenshot_sync.py)
 
 ## Conclusion: My New Setup
 
