@@ -1,9 +1,8 @@
 ---
 title: How I Automated My Studying with Obsidian and Mochi.cards
 description: >-
-  Notetaking is slow, but it can be faster with the proper strategies and tools.
-  I type notes onto Obsidian and use Mochi.card for flashcards. But alone, they
-  weren't enough.
+  Notetaking is slow. At times, painfully slow. I type notes onto Obsidian.md
+  and use Mochi.cards for flashcards. But alone, they weren't enough.
 date: 2023-10-13T04:00:00.000Z
 tags:
   - Notetaking
@@ -49,6 +48,8 @@ So I took some more time and fixed all of those issues...and *voila*! An easy wa
 ![Demo of My Obsidian Plugin that creates Mochi cards](https://img.hayden.gg/7dee8e8af29674e3a05273917223354f.gif)
 
 I'm still working on the plugin, but if you want to check it out [it's on my GitHub](https://github.com/xHayden/obsidian-mochi-cards-pro).
+
+Update: It's [on the obsidian plugin store](https://obsidian.md/plugins?search=mochi%20cards#)!
 
 ## Screenshot Support
 

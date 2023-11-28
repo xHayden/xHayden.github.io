@@ -68,7 +68,7 @@
     nav {
         @apply flex justify-start gap-4 py-6;
     }
-    main, nav {
+    main, .page-sizing {
         @apply w-11/12 xl:w-3/4 2xl:w-1/2; 
     }
     nav a {

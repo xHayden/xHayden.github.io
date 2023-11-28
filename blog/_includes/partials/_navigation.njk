@@ -1,5 +1,8 @@
-<nav>
-    {% for item in collections.sortedNavItems %}
-        <a href="{{ item.url | urlPrefix | url }}">{{ item.data.title }}</a>
-    {% endfor %}
-</nav>
+<div class="page-sizing">
+    <nav class="flex w-full justify-start">
+        {% for item in collections.sortedNavItems %}
+            <a href="{{ item.url | urlPrefix | url }}">{{ item.data.title }}</a>
+        {% endfor %}
+        <a href="/" class="ml-auto">Portfolio -></a>
+    </nav>
+</div>

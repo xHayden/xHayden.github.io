@@ -98,7 +98,7 @@ export default function TypeText(props) {
     }
   
       return <>
-        <span className='text-2xl md:text-5xl xl:text-3xl py-4 absolute inline-block' style={{width: textWidth, height: textHeight}}>{displayedText}</span>
-        <p className='text-2xl md:text-5xl xl:text-3xl py-4 invisible' ref={typingRef}>{generateHiddenTextPreventCLS()}</p>
+        <span className='text-2xl md:text-3xl py-4 absolute inline-block' style={{width: textWidth, height: textHeight}}>{displayedText}</span>
+        <p className='text-2xl md:text-3xl py-4 invisible' ref={typingRef}>{generateHiddenTextPreventCLS()}</p>
       </>
   }
