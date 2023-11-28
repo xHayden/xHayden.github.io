@@ -41,7 +41,7 @@ export default function Experiences() {
   const experiences = {
     MaxRewards: {
       role: "Software Development Intern",
-      timeStarted: new Date("2023-8-01"),
+      timeStarted: new Date("2023-08-01"),
       description: (
         <>
           <p>
