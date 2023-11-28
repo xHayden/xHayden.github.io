@@ -8,7 +8,7 @@
     "dev:11ty": "eleventy --watch",
     "dev:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --watch --postcss",
     "dev:server": "node dev-server.js",
-    "dev": "npx tinacms dev -c 'npm run dev-link'",
+    "dev": "npx tinacms dev -c \"npm run dev-link\"",
     "dev-link": "run-p dev:*",
     "build:11ty": "eleventy",
     "build:css": "tailwindcss -i blog/assets/css/tailwind.css -o _site_blog/assets/css/tailwind.css --postcss",
