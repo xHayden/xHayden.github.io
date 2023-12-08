@@ -32,6 +32,11 @@
         gtag('js', new Date());
         gtag('config', 'G-GNKRNQ5K23');
         </script>
+        {% if canonical %}
+            <link rel="canonical" href={{ canonical }} />
+        {% elif slug %}
+            <link rel="canonical" href="https://hayden.gg/blog/{{ slug | slugify | url }}/" />
+        {% endif %}
     </head>
     <body>
         {% include "partials/_navigation.njk" %}

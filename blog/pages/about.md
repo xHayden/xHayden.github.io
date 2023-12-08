@@ -7,6 +7,7 @@ o: 2
 description: I'm Hayden Carpenter. I'm an undergraduate student at The Georgia Institute of Technology in Atlanta, Georgia...
 date: 2023-07-22
 slug: about
+canonical: https://hayden.gg/blog/about/
 ---
 
 {% headers "About", ""%}
