@@ -24,11 +24,11 @@ function App() {
         <Navbar/>
         <div className='pt-14 pb-24 md:pt-10 md:pb-12 sm:py-auto flex w-full gap-16 items-center'>
           <div className='w-full flex flex-col gap-2 md:gap-8'>
-            <p className='text-3xl md:text-5xl xl:text-7xl font-bold'>I'm <span className='text-secondary'>Hayden Carpenter</span>.</p>
-            <p className='text-2xl md:text-3xl xl:text-4xl font-thin' style={{"lineHeight": "1.25em"}}>
+            <h1 className='text-3xl md:text-5xl xl:text-7xl font-bold'>I'm <span className='text-secondary'>Hayden Carpenter</span>.</h1>
+            <h2 className='text-2xl md:text-3xl xl:text-4xl font-thin' style={{"lineHeight": "1.25em"}}>
               I'm a fullstack web developer studying Computer Science with a Psychology minor at <span className="text-secondary">Georgia Tech</span>.
               I specialize in web app development, but I'm pursuing ways to make <span className="text-secondary">AI designed for humans</span>.
-            </p>
+            </h2>
           </div>
         </div>
         <div className="">
@@ -43,7 +43,7 @@ function App() {
             <Projects/>
         </div>
         <div className='flex mt-16 2xl:mt-32 font-thin text-sm'>
-          <p>Hayden Carpenter © {new Date().getFullYear().toString()}</p>
+          <footer>Hayden Carpenter © {new Date().getFullYear().toString()}</footer>
         </div>
           <Contacts/>
       </div>

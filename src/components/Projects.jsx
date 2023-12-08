@@ -8,8 +8,8 @@ function Project(props) {
     return <div className="w-full flex justify-start items-end shadow-lg shadow-slate-700">
         <a className={`w-full transition h-full ease-in-out flex items-end justify-start bg-cover pt-32 ${props.center ? "bg-center" : "bg-left-top"} hover:skew-x-0 rounded-md vignette hover:scale-105`} href={props.href} target={props.local ? "_self" : "_blank"} style={{backgroundImage: `url(${props.imgSrc})`}}>
             <div className="px-6 py-4 flex gap-1 flex-col">
-                <p className="text-2xl text-white font-bold opacity-100">{props.name}</p>
-                <p className="text-lg text-primarytext font-normal opacity-100">{props.description}</p>
+                <h4 className="text-xl text-white font-bold opacity-100">{props.name}</h4>
+                <h5 className="text-md text-primarytext font-normal opacity-100">{props.description}</h5>
             </div>
         </a>
     </div>
