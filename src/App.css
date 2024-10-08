@@ -6,8 +6,68 @@
     box-shadow: inset 0px -80px 150px 40px black;
 }
 
+body {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+h2 {
+    font-size: 1.10em;
+    font-weight: 600;
+    /* border-bottom: 2px solid rgb(251 191 36); */
+    padding-bottom: 0px;
+    margin-bottom: 8px;
+    line-height: 1em;
+    width: max-content;
+}
+
+a {
+    color: rgb(251 191 36);
+    font-weight: 600;
+}
+
+
+body {
+    font-size: 16px;
+}
+  
+@media (max-width: 768px) {
+body {
+    font-size: 14px;
+}
+}
+
+@media (max-width: 480px) {
+body {
+    font-size: 12px;
+}
+}
+  
+
 @media screen and (min-width: 1280) {
     .textSlightlyLarger { 
         font-size: 2.5rem;
     }
+}
+
+.list-disc-fix li {
+    list-style-type: none;
+}
+
+.list-disc-fix ul {
+    padding-left: 1.5em; 
+}
+
+.list-disc-fix ul ul {
+    padding-left: 2em; 
+}
+
+.list-disc-fix ul ul ul {
+    padding-left: 2.5em;
+}
+
+.list-disc-fix li:before {
+    color: rgb(251 191 36);
+    float: left;
+    width: 1em;
+    content: '\2022';
 }
