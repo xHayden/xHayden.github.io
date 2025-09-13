@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import useWindowSize from "../utils/useWindowSize";
+import useWindowSize from "../../utils/useWindowSize";
 
 export default function TypeText(props) {
     const [wordSpeaking, setWordSpeaking] = useState(0);

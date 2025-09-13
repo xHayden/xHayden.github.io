@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import ProjectCard from './ProjectCard';
-import Modal from './Modal';
-import Pagination from './Pagination';
-import { BREAKPOINTS } from "../../portfolio.config";
+import ProjectModal from './ProjectModal';
+import Pagination from '../ui/Pagination';
+import { BREAKPOINTS } from "../../../portfolio.config";
 
 const getItemsPerPage = (width) => {
   if (width >= BREAKPOINTS['2xl']) {
@@ -88,9 +88,9 @@ const ProjectGrid = ({ projects, isMobile = false }) => {
             onPageChange={setCurrentPage}
         />
       )}
-      <Modal isOpen={!!selectedProject} onClose={handleCloseModal}>
+      <ProjectModal isOpen={!!selectedProject} onClose={handleCloseModal}>
         {selectedProject?.modalContent}
-      </Modal>
+      </ProjectModal>
     </div>
   );
 };

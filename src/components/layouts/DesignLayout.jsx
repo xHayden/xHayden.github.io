@@ -1,12 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import designStyles from "../../style/DesignLayout.module.css";
-import ProjectGrid from "../ProjectGrid";
-import ProjectsMobile from "../ProjectsMobile";
-import HeroMobile from "../HeroMobile";
-import HeroDesktop from "../HeroDesktop";
+import ProjectGrid from "../projects/ProjectGrid";
+import ProjectsMobile from "../projects/ProjectsMobile";
+import HeroMobile from "../hero/HeroMobile";
+import HeroDesktop from "../hero/HeroDesktop";
 import { projects } from "../../data/projects";
-// import TrailingCursor from "../TrailingCursor";
-import DonutScrollAnimation from "../DonutScrollAnimation";
+// import TrailingCursor from "../ui/TrailingCursor";
+import DonutScrollAnimation from "../animations/DonutScrollAnimation";
 import { FiGithub, FiLinkedin, FiMail, FiFileText } from "react-icons/fi";
 
 const DesignLayout = () => {

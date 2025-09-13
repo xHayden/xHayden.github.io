@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import useWindowSize from "../utils/useWindowSize";
+import useWindowSize from "../../utils/useWindowSize";
 
 const months = [
   "Jan",

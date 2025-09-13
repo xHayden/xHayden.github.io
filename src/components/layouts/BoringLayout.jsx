@@ -1,4 +1,4 @@
-import Navbar from "../Navbar";
+import Navbar from "../navigation/Navbar";
 import boringStyles from "../../style/BoringLayout.module.css";
 
 const BoringLayout = (styles) => {
