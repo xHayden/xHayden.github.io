@@ -2,8 +2,8 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 const Badge = ({ children }) => (
-  <span className="inline-flex items-center gap-2 rounded-md border border-black/15 px-3 py-1 text-xs font-medium text-black hover:bg-black hover:text-white transition">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 opacity-70" aria-hidden="true">
+  <span className="inline-flex items-center gap-2 rounded-md border border-black/10 bg-black/5 px-3 py-1 text-xs font-medium text-black/70 select-none pointer-events-none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 opacity-60" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75" />
     </svg>
     {children}
@@ -24,7 +24,7 @@ const LinkPill = ({ href, label }) => (
   </a>
 );
 
-const ProjectModal = ({ name, description, benefits, links = [], className }) => {
+const ProjectDetails = ({ name, description, benefits, links = [], className }) => {
   return (
     <div className={twMerge("flex flex-col gap-5", className)}>
       <div>
@@ -57,6 +57,6 @@ const ProjectModal = ({ name, description, benefits, links = [], className }) =>
   );
 };
 
-export default ProjectModal;
+export default ProjectDetails;
 
 

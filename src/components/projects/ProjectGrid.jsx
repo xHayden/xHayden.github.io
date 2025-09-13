@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import ProjectCard from './ProjectCard';
-import ProjectModal from './ProjectModal';
+import Modal from '../ui/Modal';
 import Pagination from '../ui/Pagination';
 import { BREAKPOINTS } from "../../../portfolio.config";
 
@@ -88,9 +88,9 @@ const ProjectGrid = ({ projects, isMobile = false }) => {
             onPageChange={setCurrentPage}
         />
       )}
-      <ProjectModal isOpen={!!selectedProject} onClose={handleCloseModal}>
+      <Modal isOpen={!!selectedProject} onClose={handleCloseModal}>
         {selectedProject?.modalContent}
-      </ProjectModal>
+      </Modal>
     </div>
   );
 };

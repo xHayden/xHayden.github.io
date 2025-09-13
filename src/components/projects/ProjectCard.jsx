@@ -18,10 +18,10 @@ const ProjectCard = ({ project, onClick, className, isCompact = false }) => {
         isCompact ? "flex flex-col gap-1 mb-2" : "flex flex-col md:flex-row md:gap-3 items-start justify-between mb-4"
       )}>
         <p className={twMerge(
-          isCompact ? "text-sm font-semibold text-black/90 leading-snug" : "text-base md:text-lg font-semibold text-black/90 w-full leading-snug"
+          isCompact ? "text-base font-semibold text-black/90 leading-snug" : "text-base md:text-lg font-semibold text-black/90 w-full leading-snug"
         )}>{project.name}</p>
         <p className={twMerge(
-          isCompact ? "text-[10px] uppercase tracking-wider text-black/60 truncate" : "text-[11px] md:text-xs uppercase tracking-wider text-black/60 w-full leading-relaxed"
+          isCompact ? "text-[12px] uppercase tracking-wider text-black/60 truncate" : "text-[11px] md:text-xs uppercase tracking-wider text-black/60 w-full leading-relaxed"
         )}>{project.description}</p>
       </div>
 

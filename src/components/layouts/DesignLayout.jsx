@@ -45,7 +45,7 @@ const DesignLayout = () => {
         </div>
 
         <main className="flex flex-col items-center">
-          <div className="max-w-[1400px] w-full px-4 md:px-12 flex flex-col gap-16">
+          <div className="max-w-[1400px] w-full px-4 md:px-12 flex flex-col gap-12 md:gap-16">
             <HeroMobile />
             <HeroDesktop />
             {/* <div className="border-t-2 border-gray-600 hidden md:block"></div> */}
@@ -124,47 +124,47 @@ const DesignLayout = () => {
           </div>
         </main>
         <footer className="w-full bg-white flex flex-col items-center">
-          <div className="w-full max-w-[1400px] px-4 md:px-12 pt-8 md:pt-10 gap-6 md:gap-8 text-xs md:text-sm justify-between flex items-center">
+          <div className="w-full max-w-[1400px] px-4 md:px-12 pt-12 md:pt-10 gap-6 md:gap-8 text-sm md:text-sm justify-between flex items-center">
             <div className="flex flex-col gap-2">
               <p className="text-black/80">Hayden Carpenter © {new Date().getFullYear()}</p>
             </div>
             <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-2.5 md:gap-3">
+              <div className="flex items-center gap-3 md:gap-3">
                 <a
                   href="https://github.com/xHayden"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="GitHub"
-                  className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
+                  className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
                 >
-                  <FiGithub className="text-sm md:text-base" />
+                  <FiGithub className="text-base md:text-base" />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/haydencarpenter/"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="LinkedIn"
-                  className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
+                  className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
                 >
-                  <FiLinkedin className="text-sm md:text-base" />
+                  <FiLinkedin className="text-base md:text-base" />
                 </a>
                 <a
                   href="mailto:me@hayden.gg"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="Email"
-                  className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
+                  className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
                 >
-                  <FiMail className="text-sm md:text-base" />
+                  <FiMail className="text-base md:text-base" />
                 </a>
                 <a
                   href="https://hayden.gg/resume/HaydenCarpenter_Resume.pdf"
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="Resume"
-                  className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
+                  className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/15 hover:bg-black hover:text-white transition"
                 >
-                  <FiFileText className="text-sm md:text-base" />
+                  <FiFileText className="text-base md:text-base" />
                 </a>
               </div>
             </div>

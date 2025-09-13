@@ -1,8 +1,8 @@
-import ProjectModal from "../components/projects/ProjectModal";
+import ProjectDetails from "../components/projects/ProjectDetails";
 
 const GenericModal = (name, description, benefits, links = []) => {
   return (
-    <ProjectModal
+    <ProjectDetails
       name={name}
       description={description}
       benefits={benefits}
@@ -19,7 +19,7 @@ export const projects = [
     imageUrl: "/photos/G7C0oBQVez.webp",
     modalContent: GenericModal(
       "Health Sync",
-      "An interactive dashboard that visualizes Apple HealthKit data with responsive, adaptable widgets for quick health insights. After working on Ichor, it's main purpose has become a pullup tracker on a Raspberry Pi.",
+      "An interactive dashboard that visualizes Apple HealthKit data with responsive, adaptable widgets for quick health insights. After working on Ichor, its main purpose has become a pullup tracker on a Raspberry Pi.",
       [
         "Apple HealthKit integration",
         "Responsive dashboard widgets",
@@ -55,13 +55,13 @@ export const projects = [
     imageUrl: "/photos/5LxM2uG6qm.webp",
     modalContent: GenericModal(
       "MaxRewards.com",
-      "Implemented the production marketing site (Aug 2023 – Jan 2024) using modern web tech and animation libraries, plus an automated credit card comparison tool.",
+      "Implemented the production marketing site (Aug 2023 - Jan 2024) using modern web tech and animation libraries. Also created an automated credit card comparison tool.",
       [
         "Next.js with SSR",
         "TypeScript + Tailwind",
         "Interactive animations",
-        "Performance-minded implementation",
         "Automated card comparison tool",
+        "GPT-4-powered credit card recommendations",
       ],
       [{ href: "https://www.maxrewards.com", label: "Website" }]
     ),
@@ -92,7 +92,7 @@ export const projects = [
     imageUrl: "/photos/XYeV6wuAKc.webp",
     modalContent: GenericModal(
       "Lightweight Image Hosting",
-      "Minimal, fast image hosting that pairs with a macOS screenshot utility to auto-upload and return a markdown-ready URL—perfect for Obsidian notes and quick sharing.",
+      "Minimal, fast image hosting that pairs with a macOS screenshot utility to auto-upload and return a markdown-ready URL. Perfect for Obsidian notes and quick sharing.",
       [
         "Instant screenshot upload",
         "Markdown URL to clipboard",

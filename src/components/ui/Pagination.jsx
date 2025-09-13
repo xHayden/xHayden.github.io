@@ -57,7 +57,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className }) => {
   return (
     <div
       className={twMerge(
-        "flex justify-center items-center gap-3 md:gap-4 mt-6 md:mt-8 text-xs md:text-base",
+        "flex justify-center items-center gap-3 md:gap-4 mt-6 md:mt-8 text-sm md:text-base",
         className
       )}
     >
