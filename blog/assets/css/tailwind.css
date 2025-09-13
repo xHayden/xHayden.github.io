@@ -77,6 +77,6 @@
         @apply w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-2/5; 
     }
     nav a {
-        @apply text-gray-900 hover:text-gray-600 transition-colors duration-200 font-medium;
+        @apply text-gray-900 hover:text-gray-600 transition-colors duration-200;
     }
 }

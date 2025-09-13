@@ -20,8 +20,8 @@ const DesignLayout = () => {
         )}
       >
         <div className="flex w-full md:justify-end sticky right-0 top-0 px-4 md:px-12 py-4 z-10 bg-white">
-          <nav className="flex items-center w-full text-black justify-end gap-6">
-            <div className="flex gap-6">
+          <nav className="flex items-center w-full text-black justify-end gap-4">
+            <div className="flex gap-4">
               <a href="/blog/" className="hover:opacity-50 transition-opacity">
                 Blog
               </a>
@@ -29,7 +29,7 @@ const DesignLayout = () => {
                 href="/blog/about/"
                 className="hover:opacity-50 transition-opacity"
               >
-                About Me
+                About
               </a>
               <a
                 href="/blog/contact/"

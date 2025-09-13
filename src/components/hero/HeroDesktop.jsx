@@ -35,9 +35,9 @@ const HeroDesktop = () => {
           </p>
         </div>
       </div>
-      <div className="w-full flex justify-center">
+      <div className="w-max justify-self-end">
         <img
-          className="block h-auto md:max-h-[520px] w-auto max-w-full object-contain rounded mx-auto"
+          className="block h-auto md:max-h-[520px] w-auto max-w-full object-contain rounded"
           src="/photos/nJuWFumzv4.webp"
           alt="Hayden Carpenter profile photo"
         />
