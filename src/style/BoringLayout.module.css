@@ -1,21 +1,14 @@
-@config '../../tailwind.config.cjs'
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.vignette { 
-    box-shadow: inset 0px -80px 150px 40px black;
+.vignette {
+  box-shadow: inset 0px -80px 150px 40px black;
 }
 
 body {
-    font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
-
+/* 
 h2 {
     font-size: 1.10em;
     font-weight: 600;
-    /* border-bottom: 2px solid rgb(251 191 36); */
     padding-bottom: 0px;
     margin-bottom: 8px;
     line-height: 1em;
@@ -72,4 +65,4 @@ body {
     float: left;
     width: 1em;
     content: '\2022';
-}
+} */

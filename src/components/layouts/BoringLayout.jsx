@@ -1,8 +1,9 @@
 import Navbar from "../Navbar";
-import "../../style/BoringLayout.css";
+import boringStyles from "../../style/BoringLayout.module.css";
 
-const BoringLayout = () => {
-    return <>
+const BoringLayout = (styles) => {
+  console.log(boringStyles.container)
+    return <main className={boringStyles.container}>
       <link rel="preconnect" href="https://fonts.googleapis.com"></link>
       <link
         rel="preconnect"
@@ -290,7 +291,7 @@ const BoringLayout = () => {
           </div>
         </div>
       </div>
-    </>
+    </main>
 }
 
 export default BoringLayout;

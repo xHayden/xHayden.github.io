@@ -1,5 +1,5 @@
-<div class="page-sizing">
-    <nav class="flex w-full justify-start">
+<div class="page-sizing py-4">
+    <nav class="flex w-full justify-start py-2">
         {% for item in collections.sortedNavItems %}
             <a href="{{ item.url | urlPrefix | url }}">{{ item.data.title }}</a>
         {% endfor %}

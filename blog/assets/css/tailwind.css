@@ -1,16 +1,17 @@
-@config '../../../tailwind.config.cjs'
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     body {
-        @apply bg-zinc-900 text-white ;
-        @apply xl:mx-64 flex justify-center flex-col items-center;
+        @apply bg-white text-gray-900 ;
+        @apply flex justify-center flex-col items-center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
     p, li {
-        @apply text-base md:text-lg font-serif text-stone-200;
+        @apply text-base md:text-lg text-gray-700;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
     }
     h1, h2, h3, h4 {
         margin-top: 1em;
@@ -41,16 +42,18 @@
         @apply text-sm md:text-base !important;
     }
     code {
-        @apply text-amber-400;
+        @apply text-gray-800 bg-gray-100 px-1 py-0.5 rounded;
+        font-family: "SF Mono", Menlo, Monaco, "Cascadia Code", "Liberation Mono", "Courier New", monospace;
     }
     h1, h2, h3 {
-        @apply font-bold text-amber-400;
+        @apply font-bold text-gray-900;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
     blockquote {
-        @apply px-4 py-2 border-l-4  border-gray-200 bg-syntax-bg-grey rounded-r-lg;
+        @apply px-6 py-4 border-l-4 border-gray-300 bg-gray-50 rounded-r-lg;
     }
     blockquote p {
-        @apply m-0 font-medium leading-relaxed text-white;
+        @apply m-0 font-normal leading-relaxed text-gray-700 italic;
     }
     ul {
         @apply list-disc list-inside;
@@ -65,15 +68,15 @@
         @apply pl-4;
     }
     a {
-        @apply text-amber-200;
+        @apply text-red-500 hover:text-red-700 transition-colors duration-200;
     }
     nav {
         @apply flex justify-start gap-4 py-6;
     }
     main, .page-sizing {
-        @apply w-11/12 xl:w-3/4 2xl:w-1/2; 
+        @apply w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-2/5; 
     }
     nav a {
-        @apply text-amber-400;
+        @apply text-gray-900 hover:text-gray-600 transition-colors duration-200 font-medium;
     }
 }

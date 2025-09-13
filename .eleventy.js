@@ -19,7 +19,7 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addShortcode(
         "headers",
         (title, subtitle) =>
-          `<h1 class="m-0 p-0 leading-none">${title}</h1>
+          `<h1 class="m-0 p-0">${title}</h1>
             <p class="">${subtitle}</p>`
     );
 

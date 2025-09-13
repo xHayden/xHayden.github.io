@@ -1,0 +1,51 @@
+export const photos = [
+  {
+    id: "hayden-avatar",
+    name: "Hayden Carpenter",
+    url: "/photos/nJuWFumzv4.webp",
+    width: "400",
+    height: "400",
+  },
+  {
+    id: "health-sync",
+    name: "Health Sync Dashboard",
+    url: "/photos/G7C0oBQVez.webp",
+    width: "400",
+    height: "300",
+  },
+  {
+    id: "ichor-health",
+    name: "Ichor Health Platform", 
+    url: "/photos/p00L5i_8Vb.webp",
+    width: "400",
+    height: "300",
+  },
+  {
+    id: "maxrewards",
+    name: "MaxRewards Website",
+    url: "/photos/5LxM2uG6qm.webp",
+    width: "400",
+    height: "300",
+  },
+  {
+    id: "physarum-simulation",
+    name: "Physarum Simulation",
+    url: "/photos/_gQcmcRHO3.webp",
+    width: "400",
+    height: "300",
+  },
+  {
+    id: "image-hosting",
+    name: "Lightweight Image Hosting",
+    url: "/photos/XYeV6wuAKc.webp",
+    width: "400",
+    height: "300",
+  },
+  {
+    id: "sweatstake",
+    name: "SweatStake App",
+    url: "/photos/BR6SNH8MNc.webp",
+    width: "400",
+    height: "300",
+  },
+];

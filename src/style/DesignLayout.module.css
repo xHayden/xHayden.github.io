@@ -1,0 +1,45 @@
+body {
+  /* background: radial-gradient(
+    ellipse at center,
+    oklch(87.9% 0.169 91.605) 0%,
+    oklch(87.9% 0.169 91.605) 70%,
+    transparent 25%
+  ); */
+  background-size: 8rem 8rem;
+  background-repeat: repeat;
+  @apply w-full h-full m-0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: white;
+  /* cursor: none; */
+}
+
+main {
+    @apply w-full h-full;
+}
+
+section {
+    @apply w-full bg-white
+}
+
+ul {
+  list-style: circle;
+  list-style-position: inside;
+}
+
+@keyframes slide {
+  0% {
+    left: -33%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.animate-slide {
+  animation: slide 1.2s ease-in-out infinite;
+}

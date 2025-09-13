@@ -12,9 +12,9 @@ canonical: https://hayden.gg/blog/about/
 
 {% headers "About", ""%}
 
-I'm Hayden Carpenter. I'm an undergraduate student at The Georgia Institute of Technology in Atlanta, Georgia.
-I'm pursuing a Bachelor's degree in Computer Science with a focus on Computer Systems Architecture and Cybersecurity. I also have a minor in Psychology.
+Hi, I'm Hayden Carpenter, an undergraduate student at The Georgia Institute of Technology in Atlanta, Georgia.
+I'm pursuing a Bachelor's degree in Computer Science with a focus on [Systems & Architecture](https://www.cc.gatech.edu/academics/threads/systems-architecture) and [Cybersecurity & Privacy](https://www.cc.gatech.edu/cybersecurity-and-privacy). I also have a minor in Psychology.
 
-I'm also an Associate Director of Engineering at [Bits Of Good](https://bitsofgood.org), a Hack4Impact Chapter at Georgia Tech, where I work on app development for non-profits. One other cool thing I do is help run Fantasy Stork Club where we bet on stork migration like you would Fantasy Football.
+Out of class, I'm the Director of Engineering for [Bits Of Good](https://bitsofgood.org), a Hack4Impact Chapter at Georgia Tech, where I work on app development for non-profits.
 
 Feel free to reach out!
