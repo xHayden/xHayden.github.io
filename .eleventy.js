@@ -63,6 +63,12 @@ module.exports = (eleventyConfig) => {
       });
     });
 
+    eleventyConfig.addCollection("visiblePost", function(collectionApi) {
+      return collectionApi.getFilteredByTag("post").filter(function(item) {
+        return item.data.visible !== false;
+      });
+    });
+
     eleventyConfig.addFilter("sortByDate", (values) => {
       let vals = [...values];
       return vals.sort((a, b) => Math.sign(b.data.date - a.data.date));

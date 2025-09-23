@@ -11,12 +11,10 @@ canonical: https://hayden.gg/blog/
 {% headers "Latest Posts", "of things I'm working on or find cool"%}
 
 <ul class="blog-list">
-    {% for post in collections.post | sortByDate %}
-        {% if post.data.visible != false %}
+    {% for post in collections.visiblePost | sortByDate %}
         <li>
             <a href="{{ post.url | urlPrefix | url }}">{{ post.data.title }}</a>
             <p>{{post.date | postDate}}</p>
         </li>
-        {% endif %}
     {% endfor %}
 </ul>

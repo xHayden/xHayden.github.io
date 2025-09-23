@@ -1,5 +1,5 @@
-{% set next = collections.post | sortByDate | getPreviousCollectionItem(page) %}
-{% set previous = collections.post | sortByDate | getNextCollectionItem(page) %}
+{% set next = collections.visiblePost | sortByDate | getPreviousCollectionItem(page) %}
+{% set previous = collections.visiblePost | sortByDate | getNextCollectionItem(page) %}
 <div class="py-6">
     {% if previous %}
         Previous: <a href="{{ previous.url | urlPrefix | url }}">{{ previous.data.title }}</a>

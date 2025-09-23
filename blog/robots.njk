@@ -1,0 +1,13 @@
+---
+permalink: "/robots.txt"
+eleventyExcludeFromCollections: true
+---
+User-agent: *
+{%- for post in collections.post %}
+{%- if post.data.visible == false %}
+Disallow: {{ post.url }}
+{%- endif %}
+{%- endfor %}
+
+Sitemap: https://hayden.gg/sitemap.xml
+Sitemap: https://hayden.gg/blog/sitemap.xml
