@@ -8,13 +8,15 @@ slug: ""
 canonical: https://hayden.gg/blog/
 ---
 
-{% headers "Blog", "things I'm working on or find cool"%}
+{% headers "Latest Posts", "of things I'm working on or find cool"%}
 
-<ul>
+<ul class="blog-list">
     {% for post in collections.post | sortByDate %}
+        {% if post.data.visible != false %}
         <li>
             <a href="{{ post.url | urlPrefix | url }}">{{ post.data.title }}</a>
-            <p class="text-sm">{{post.date | postDate}}</p>
+            <p>{{post.date | postDate}}</p>
         </li>
+        {% endif %}
     {% endfor %}
 </ul>

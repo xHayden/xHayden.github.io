@@ -19,7 +19,7 @@ const DesignLayout = () => {
           designStyles.container
         )}
       >
-        <div className="flex w-full md:justify-end sticky right-0 top-0 px-4 md:px-12 py-4 z-10 bg-white">
+        <div className="flex w-full md:justify-end sticky right-0 top-0 px-6 md:px-12 py-6 z-10 bg-white">
           <nav className="flex items-center w-full text-black justify-end gap-4">
             <div className="flex gap-4">
               <a href="/blog/" className="hover:opacity-50 transition-opacity">
@@ -45,7 +45,7 @@ const DesignLayout = () => {
         </div>
 
         <main className="flex flex-col items-center">
-          <div className="max-w-[1400px] w-full px-4 md:px-12 flex flex-col gap-12 md:gap-16">
+          <div className="max-w-[1400px] w-full px-6 md:px-12 flex flex-col gap-12 md:gap-16">
             <HeroMobile />
             <HeroDesktop />
             {/* <div className="border-t-2 border-gray-600 hidden md:block"></div> */}
@@ -124,7 +124,7 @@ const DesignLayout = () => {
           </div>
         </main>
         <footer className="w-full bg-white flex flex-col items-center">
-          <div className="w-full max-w-[1400px] px-4 md:px-12 pt-12 md:pt-10 gap-6 md:gap-8 text-sm md:text-sm justify-between flex items-center">
+          <div className="w-full max-w-[1400px] px-6 md:px-12 pt-16 md:pt-10 pb-8 gap-6 md:gap-8 text-sm md:text-sm justify-between flex items-center">
             <div className="flex flex-col gap-2">
               <p className="text-black/80">Hayden Carpenter © {new Date().getFullYear()}</p>
             </div>

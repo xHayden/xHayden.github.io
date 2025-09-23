@@ -11,6 +11,7 @@ tags:
   - AI
   - Software Development
 slug: learning-software-development-with-ai-sucks
+visible: true
 ---
 
 A common workflow students used to use when learning Software Development:

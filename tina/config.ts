@@ -62,6 +62,16 @@ export default defineConfig({
             required: false,
           },
           {
+            type: "boolean",
+            name: "visible",
+            label: "Visible",
+            required: true,
+            description: "Whether this post should be visible in the blog list",
+            ui: {
+              defaultValue: true,
+            },
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",

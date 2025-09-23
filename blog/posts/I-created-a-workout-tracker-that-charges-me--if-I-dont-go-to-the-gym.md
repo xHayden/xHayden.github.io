@@ -5,6 +5,7 @@ description: >-
   money. Which force will win? To decide this, I created an iOS app in Swift.
 date: 2023-11-28T05:00:00.000Z
 slug: workout-tracker-apple-health-charges-money
+visible: true
 ---
 
 <style>

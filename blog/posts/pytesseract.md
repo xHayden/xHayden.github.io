@@ -3,6 +3,7 @@ title: Minecraft OCR With PyTesseract
 description: How to set yourself up for Minecraft automation by getting your computer to read the Minecraft font with Python and PyTesseract.
 date: 2020-07-20
 slug: minecraft-ocr-with-pytesseract
+visible: true
 ---
 
 ## What is PyTesseract and OCR?

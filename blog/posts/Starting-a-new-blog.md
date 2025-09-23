@@ -7,6 +7,7 @@ description: >-
   I decided to start a blog.
 date: 2023-07-22T04:00:00.000Z
 slug: new-blog
+visible: false
 ---
 
 I don't like writing. It's boring, it's slow, and it generally takes time away from actually solving problems. That's why this site is so marvelously speckled with features and optimizations-because I don't want to actually write.
