@@ -1,0 +1,545 @@
+body {
+  margin: 0;
+  background: oklch(0.985 0.006 85);
+  -webkit-font-smoothing: antialiased;
+}
+
+.root {
+  position: relative;
+  min-height: 100vh;
+  background: oklch(0.985 0.006 85);
+  color: oklch(0.26 0.02 265);
+  font-family: Figtree, system-ui, sans-serif;
+  line-height: normal;
+  overflow-x: clip;
+}
+
+.root ::selection {
+  background: oklch(0.9 0.13 98);
+}
+
+.column {
+  box-sizing: content-box;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 48px);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 16px;
+  padding: 32px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 17px;
+  color: oklch(0.5 0.02 265);
+}
+
+.headerLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.headerLink:hover {
+  color: oklch(0.26 0.02 265);
+}
+
+.main {
+  padding: clamp(24px, 5vh, 56px) 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-size: clamp(19px, 2.1vw, 23px);
+  line-height: 1.6;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-size: clamp(40px, 6vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+/* Face drawing just right of "Hayden." */
+.name {
+  position: relative;
+  white-space: nowrap;
+}
+
+.face {
+  position: absolute;
+  left: calc(100% + 0.2em);
+  top: 50%;
+  width: 0.99em;
+  height: auto;
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.para {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.muted {
+  color: oklch(0.5 0.02 265);
+}
+
+.logoLink {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: -0.2em;
+  margin: 0 2px;
+}
+
+.logo {
+  display: block;
+  height: 1.15em;
+  width: auto;
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-color: oklch(0.8 0.01 265);
+}
+
+.muted .link {
+  color: oklch(0.26 0.02 265);
+}
+
+/* Keeps punctuation or a hand-drawn mark on the same line as the word before it */
+.nowrap {
+  white-space: nowrap;
+}
+
+.bangsMark {
+  display: inline-block;
+  width: 1.1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-left: 0.25em;
+}
+
+.signature {
+  font-family: "Shantell Sans", cursive;
+  font-size: 26px;
+  transform: rotate(-3deg);
+  transform-origin: left;
+  display: block;
+  margin-top: 16px;
+}
+
+.spacer {
+  height: 150px;
+}
+
+.canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  mix-blend-mode: multiply;
+}
+
+.ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translate(-200px, -200px);
+  z-index: 45;
+  pointer-events: none;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  transition: width 0.2s, height 0.2s, margin 0.2s, opacity 0.2s;
+}
+
+/* Stick figure, speech bubbles, and drawing toolbar */
+
+.dock {
+  position: fixed;
+  right: 20px;
+  bottom: 16px;
+  z-index: 60;
+}
+
+.buddy {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  transition: opacity 0.3s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 190px;
+  margin-right: -4px;
+  transition: margin-bottom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chatRow {
+  display: grid;
+  transition: grid-template-rows 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chatRowInner {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  padding: 3px 14px 6px 2px;
+}
+
+.bubble {
+  position: relative;
+  font-family: "Shantell Sans", cursive;
+  font-size: 15px;
+  line-height: 1.2;
+  padding: 6px 12px;
+  border: 2px solid oklch(0.26 0.02 265);
+  border-radius: 16px 18px 4px 17px / 18px 15px 4px 16px;
+  background: oklch(1 0 0);
+  color: oklch(0.26 0.02 265);
+  white-space: nowrap;
+  transform-origin: bottom right;
+  transition: opacity 0.3s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bubbleTail {
+  position: absolute;
+  right: -13px;
+  bottom: -2px;
+  overflow: visible;
+}
+
+.askButton {
+  margin-right: 34px;
+  min-width: 40px;
+  height: 36px;
+  padding: 0 12px;
+  border: 2px solid oklch(0.26 0.02 265);
+  border-radius: 17px 15px 18px 4px / 15px 18px 16px 4px;
+  font-family: "Shantell Sans", cursive;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1;
+  transform-origin: bottom left;
+  transition: opacity 0.3s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.3s, color 0.3s;
+}
+
+.figure {
+  position: relative;
+  width: 70px;
+  height: 100px;
+}
+
+.figureBack {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.figureFront {
+  position: relative;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.penButton {
+  position: absolute;
+  left: -32px;
+  top: 47px;
+  width: 66px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: 85% 50%;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+}
+
+.penButton:hover {
+  transform: rotate(-14deg) scale(1.1) !important;
+}
+
+.penButton svg {
+  display: block;
+  overflow: visible;
+}
+
+.toolbarWrap {
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  width: max-content;
+  max-width: calc(100vw - 40px);
+  transform-origin: bottom right;
+  transition: opacity 0.25s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 30px;
+  background: oklch(1 0 0);
+  border: 1px solid oklch(0.92 0.01 85);
+  box-shadow: 0 14px 34px -14px oklch(0.3 0.03 265 / 0.35),
+    0 2px 6px oklch(0.3 0.03 265 / 0.06);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Figtree, sans-serif;
+}
+
+.toolButton {
+  height: 44px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s,
+    color 0.2s;
+}
+
+.toolIcon {
+  display: block;
+  flex: none;
+}
+
+.toolGroup {
+  position: relative;
+  display: flex;
+}
+
+.swatches {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  padding: 3px 5px;
+  border-radius: 999px;
+  background: oklch(1 0 0);
+  border: 1px solid oklch(0.92 0.01 85);
+  box-shadow: 0 10px 24px -12px oklch(0.3 0.03 265 / 0.35),
+    0 2px 6px oklch(0.3 0.03 265 / 0.06);
+  transform-origin: bottom center;
+  transition: opacity 0.2s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.swatch {
+  width: 36px;
+  height: 36px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swatchDot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: oklch(0.9 0.01 85);
+  margin: 0 4px;
+}
+
+.plainButton {
+  height: 44px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+/* Icons for text-only buttons, shown when the toolbar collapses to icons */
+.compactIcon {
+  display: none;
+  flex: none;
+}
+
+.plainButton:hover {
+  background: oklch(0.96 0.01 85) !important;
+}
+
+.closeButton {
+  width: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton svg {
+  display: block;
+}
+
+/* Touch scrollbar that slides in with the drawing tools on phones */
+.scrollbar {
+  display: none;
+}
+
+.scrollRail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 6px;
+  width: 12px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: oklch(1 0 0);
+  border: 1px solid oklch(0.92 0.01 85);
+  box-shadow: 0 10px 24px -12px oklch(0.3 0.03 265 / 0.35),
+    0 2px 6px oklch(0.3 0.03 265 / 0.06);
+  transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scrollbar[data-scrubbing] .scrollRail {
+  width: 18px;
+}
+
+.scrollThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  border-radius: 999px;
+  background: oklch(0.26 0.02 265);
+}
+
+@media (max-width: 640px) {
+  /* Hide the browser's scrollbar while the touch scrollbar is out */
+  html[data-touch-scrollbar] {
+    scrollbar-width: none;
+  }
+
+  html[data-touch-scrollbar]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar {
+    display: block;
+    position: fixed;
+    /* Starts below the blog link so the two don't sit side by side */
+    top: calc(62px + env(safe-area-inset-top, 0px));
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    right: 0;
+    width: 28px;
+    z-index: 55;
+    touch-action: none;
+    transform-origin: right center;
+    transition: opacity 0.25s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .header {
+    padding: 24px 0;
+  }
+
+  .main {
+    padding: 24px 0 0;
+  }
+
+  /* Stickman waits at the end of the page instead of floating over the text */
+  .dock {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  /* One evenly spaced row of icons pinned to the bottom of the screen */
+  .toolbarWrap {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    max-width: 400px;
+    margin: 0 auto;
+    transform-origin: bottom center;
+  }
+
+  .toolbar {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 2px;
+  }
+
+  .toolButton,
+  .plainButton,
+  .toolGroup {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .toolButton,
+  .plainButton {
+    padding: 0;
+    justify-content: center;
+  }
+
+  .toolGroup .toolButton {
+    width: 100%;
+  }
+
+  /* The pen's five colors would run off the left edge if centered on its button */
+  .swatchesStart {
+    left: -6px;
+    translate: none;
+    transform-origin: bottom left;
+  }
+
+  .divider {
+    flex: none;
+    margin: 0 2px;
+  }
+
+  .compactIcon {
+    display: block;
+  }
+
+  .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
