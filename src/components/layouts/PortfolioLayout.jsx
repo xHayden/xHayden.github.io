@@ -659,7 +659,7 @@ class PortfolioLayout extends React.Component {
             </p>
             <p className={s.para}>
               If you've been meaning to donate,{" "}
-              <a href="https://goodlabs.com" target="_blank" rel="noopener" className={s.link}>
+              <a href="https://goodlabs.com/goodlabs-map" target="_blank" rel="noopener" className={s.link}>
                 see if we're live near you
               </a>
               .
