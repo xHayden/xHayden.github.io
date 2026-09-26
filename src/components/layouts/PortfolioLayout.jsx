@@ -746,7 +746,6 @@ class PortfolioLayout extends React.Component {
           >
             <div
               className={s.chat}
-              style={{ marginBottom: (stage === 1 || stage === 2 ? -8 : stage >= 4 ? 66 : 37) + "px" }}
             >
               <div className={s.chatRow} style={{ gridTemplateRows: m0.rows }}>
                 <div className={s.chatRowInner}>
