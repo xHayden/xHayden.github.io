@@ -1,3 +1,4 @@
+const fs = require("fs");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const includesFilter = require("./blog/includes");
@@ -11,6 +12,14 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy("blog/assets/css/themes/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/main.css");
     eleventyConfig.addPassthroughCopy("blog/admin/");
+
+    // Stamped onto the blog's own CSS and script URLs, so each deploy's copies replace whatever a
+    // browser cached from the last one (GitHub Pages lets browsers keep them for hours, and unlike
+    // the landing page's bundle their names don't change between builds)
+    eleventyConfig.addGlobalData("version", Date.now().toString(36));
+    // The blog's JavaScript modules, for the import map in _layouts/base.njk
+    const scripts = (dir, at) => fs.readdirSync(dir).filter((f) => f.endsWith(".js")).map((f) => at + f);
+    eleventyConfig.addGlobalData("modules", () => [...scripts("blog/assets/js", "assets/js/"), ...scripts("src/shared", "assets/js/shared/")]);
 
     eleventyConfig.addPlugin(syntaxHighlight);
 

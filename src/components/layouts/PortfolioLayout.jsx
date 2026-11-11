@@ -2,7 +2,7 @@ import React from "react";
 import s from "../../style/PortfolioLayout.module.css";
 import SizeSlider from "../SizeSlider";
 import { arrive, arriving, hookLink } from "../../shared/jetpack";
-import { INK, PAPER, LEMON, HIGHLIGHTERS as COLORS, SPRING, clamp, rng, highlightSwipe, drawStroke, playMarks } from "../../shared/sketch";
+import { INK, PAPER, LEMON, BUBBLEGUM, HIGHLIGHTERS as COLORS, SPRING, clamp, rng, highlightSwipe, drawStroke, playMarks } from "../../shared/sketch";
 import { FIGURE, PENCIL, ROUGH } from "../../shared/figure";
 
 const PEN_COLORS = [["Ink", INK], ...COLORS];
@@ -898,7 +898,9 @@ class PortfolioLayout extends React.Component {
                   aria-hidden="true"
                 >
                   <g filter="url(#hgg-rough)">
-                    <path d={PENCIL.body} fill={LEMON} />
+                    <path d={PENCIL.body} fill={LEMON} stroke="none" />
+                    <path d={PENCIL.eraser} fill={BUBBLEGUM} stroke="none" />
+                    <path d={PENCIL.body} />
                     <path d={PENCIL.band} />
                     <path d={PENCIL.wood} fill={PAPER} />
                     <path d={PENCIL.lead} fill={INK} />

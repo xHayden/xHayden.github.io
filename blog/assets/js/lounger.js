@@ -55,7 +55,9 @@ const LOUNGER = `
         <g data-part="arm">
           <g transform="rotate(${REACH} ${at(FIGURE.shoulder)})">
             <g transform="translate(${at(FIGURE.hand)}) rotate(${TILT}) translate(${-PENCIL.grip[0]} ${-PENCIL.grip[1]})" stroke-width="${PENCIL.stroke}">
-              <path d="${PENCIL.body}" fill="${LEMON}" />
+              <path d="${PENCIL.body}" fill="${LEMON}" stroke="none" />
+              <path d="${PENCIL.eraser}" fill="${BUBBLEGUM}" stroke="none" />
+              <path d="${PENCIL.body}" />
               <path d="${PENCIL.band}" />
               <path d="${PENCIL.wood}" fill="${PAPER}" />
               <path d="${PENCIL.lead}" fill="${INK}" />

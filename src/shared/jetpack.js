@@ -21,13 +21,11 @@ const SVG = "http://www.w3.org/2000/svg";
 // the 170 x 170 box he's drawn in (padded for the jetpack and pencil)
 const ANCHOR = [35, 70];
 const PIN = [85, 100];
-// The landing page's pencil (./figure.js), a little bigger, with the end past its band colored in
-// as an eraser. He holds it by the middle, so flipping it around puts the other end in the same
-// spot. In its own box the lead is at LEAD and the eraser's end at END.
+// The pencil (./figure.js), a little bigger. He holds it by the middle, so flipping it around puts
+// the other end in the same spot. In its own box the lead is at LEAD and the eraser's end at END.
 const PENCIL_K = 1.15;
 const LEAD = [4.5, 11.5];
 const END = [61.9, 12];
-const ERASER = "M50 6.2 L60 6.5 C62.5 7 62.5 17 60 17.5 L50 17.8 C50.8 14 50.8 10 50 6.2 Z";
 const MID = [(LEAD[0] + END[0]) / 2, (LEAD[1] + END[1]) / 2];
 // Turns the pencil to hang straight down from his hand, lead first
 const DOWN = 90 - (Math.atan2(LEAD[1] - MID[1], LEAD[0] - MID[0]) * 180) / Math.PI;
@@ -119,7 +117,7 @@ const MARKUP = `
         <g class="jet-pencil">
           <g transform="translate(${FIGURE.hand.join(" ")}) rotate(${DOWN}) scale(${PENCIL_K}) translate(${-MID[0]} ${-MID[1]})" stroke-width="${PENCIL.stroke}">
             <path d="${PENCIL.body}" fill="${LEMON}" stroke="none"/>
-            <path d="${ERASER}" fill="${BUBBLEGUM}" stroke="none"/>
+            <path d="${PENCIL.eraser}" fill="${BUBBLEGUM}" stroke="none"/>
             <path d="${PENCIL.body}"/>
             <path d="${PENCIL.band}"/>
             <path d="${PENCIL.wood}" fill="${PAPER}"/>

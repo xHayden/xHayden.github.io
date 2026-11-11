@@ -4,9 +4,14 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Every module the blog loads, stamped with this build's version (see .eleventy.js), so the
+             modules they import come fresh after a deploy too -->
+        <script type="importmap">
+            { "imports": { {% for m in modules %}"{{ m | urlPrefix | url }}": "{{ m | urlPrefix | url }}?v={{ version }}"{% if not loop.last %}, {% endif %}{% endfor %} } }
+        </script>
         <!-- The handwritten "Lander" link and the stick figure's jetpack trip, shared with the landing
              page -->
-        <link rel="stylesheet" href="{{ 'assets/js/shared/jetpack.css' | urlPrefix | url }}">
+        <link rel="stylesheet" href="{{ 'assets/js/shared/jetpack.css' | urlPrefix | url }}?v={{ version }}">
         <script type="module">
             import { arrive, hookLink } from "{{ 'assets/js/shared/jetpack.js' | urlPrefix | url }}";
             arrive();
@@ -15,8 +20,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&family=Shantell+Sans:wght@400..600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ 'assets/css/main.css' | urlPrefix | url }}">
-        <link rel="stylesheet" href="{{ 'assets/css/tailwind.css' | urlPrefix | url }}">
+        <link rel="stylesheet" href="{{ 'assets/css/main.css' | urlPrefix | url }}?v={{ version }}">
+        <link rel="stylesheet" href="{{ 'assets/css/tailwind.css' | urlPrefix | url }}?v={{ version }}">
         <link rel="stylesheet" href="{{ 'assets/css/themes/prism-material-dark.css' | urlPrefix | url }}"/>
         <meta name="description" content="
             {% if description %}

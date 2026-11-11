@@ -28,9 +28,12 @@ export const FIGURE = {
 };
 
 // The pencil, pointing left, in a 66 x 24 box: tip at (4.5, 11.5), held at the band near (52, 12).
-// Body in LEMON, the sharpened wood in PAPER, the lead in INK, at stroke width 2.
+// Body in LEMON with the eraser past the band in BUBBLEGUM, the sharpened wood in PAPER, the lead
+// in INK, at stroke width 2. Draw the body filled without a stroke, then the eraser, then the
+// body's outline on top, so the eraser doesn't cover half of it.
 export const PENCIL = {
   body: "M14 6 C28 5.5 44 5.5 60 6.5 C62.5 7 62.5 17 60 17.5 C44 18.5 28 18.5 14 18 Z",
+  eraser: "M50 6.2 L60 6.5 C62.5 7 62.5 17 60 17.5 L50 17.8 C50.8 14 50.8 10 50 6.2 Z",
   band: "M50 6.2 C50.8 10 50.8 14 50 17.8",
   wood: "M14 6.5 L4.5 11.5 L14 17.5",
   lead: "M8 9.8 L4.5 11.5 L8 13.4",

@@ -11,7 +11,9 @@ body {
   color: oklch(0.26 0.02 265);
   font-family: Figtree, system-ui, sans-serif;
   line-height: normal;
-  overflow-x: clip;
+  /* Both ways, so nothing (like the figure dropping out of sight at the end of the page on a phone)
+     makes the page longer than the canvas that covers it */
+  overflow: clip;
 }
 
 .root ::selection {
@@ -150,11 +152,14 @@ body {
 
 /* Stick figure, speech bubbles, and drawing toolbar */
 
+/* Only what's showing inside it takes touches (the figure and the toolbar each switch theirs on),
+   so its box doesn't block drawing where the hidden figure stands */
 .dock {
   position: fixed;
   right: 20px;
   bottom: 16px;
   z-index: 60;
+  pointer-events: none;
 }
 
 .buddy {
