@@ -9,7 +9,9 @@
     <title>Hayden Carpenter</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400..700&family=Shantell+Sans:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400..700&family=Shantell+Sans:wght@400..600&display=swap" rel="stylesheet">
+    <!-- The handwritten blog link and the stick figure's jetpack trip, shared with the blog -->
+    <link rel="stylesheet" href="/src/shared/jetpack.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNKRNQ5K23"></script>
     <script>
@@ -18,9 +20,12 @@
       gtag('js', new Date());
       gtag('config', 'G-GNKRNQ5K23');
     </script>
+    <!-- In <head> so blocking="render" applies (it's ignored in <body>): the page is drawn before
+         its first paint, so the crossfade in from the blog lands on the page rather than a blank
+         one. Nothing shows before the app runs anyway. As a module it still runs after parsing. -->
+    <script type="module" src="/src/main.jsx" blocking="render"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

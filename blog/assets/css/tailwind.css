@@ -118,6 +118,12 @@
         font-size: 16px;
         color: var(--muted);
     }
+    /* Same as the landing page's header, so the handwritten links sit in the same spot */
+    @media (max-width: 640px) {
+        .site-header {
+            padding: 24px 0;
+        }
+    }
     .site-header nav {
         display: flex;
         gap: 20px;

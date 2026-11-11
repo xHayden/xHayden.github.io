@@ -4,5 +4,6 @@
             <a href="{{ item.url | urlPrefix | url }}"{% if item.url == page.url %} aria-current="page"{% endif %}>{{ item.data.title }}</a>
         {% endfor %}
     </nav>
-    <a href="/">Landing →</a>
+    {# Handwritten, like "Go to my blog" in the same spot on the landing page (src/shared/jetpack.css) #}
+    <a href="/" class="hand-link" data-rewrite="Go to my blog">Go to my homepage</a>
 </header>

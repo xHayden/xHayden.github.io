@@ -1,6 +1,7 @@
 import React from "react";
 import s from "../../style/PortfolioLayout.module.css";
 import SizeSlider from "../SizeSlider";
+import { arrive, arriving, hookLink } from "../../shared/jetpack";
 import { INK, PAPER, LEMON, HIGHLIGHTERS as COLORS, SPRING, clamp, rng, highlightSwipe, drawStroke, playMarks } from "../../shared/sketch";
 import { FIGURE, PENCIL, ROUGH } from "../../shared/figure";
 
@@ -99,8 +100,10 @@ const figureStroke = {
 // Strokes are stored relative to the page's horizontal center so they stay over the
 // centered text column as the window width changes.
 class PortfolioLayout extends React.Component {
-  state = { tool: "pointer", color: 0, penColor: 0, penSize: PEN_SIZE.start, hlSize: HL_SIZE.start, n: 0, stage: -1, open: false, look: 0, scrollable: false, scrubbing: false };
+  state = { tool: "pointer", color: 0, penColor: 0, penSize: PEN_SIZE.start, hlSize: HL_SIZE.start, n: 0, stage: -1, open: false, look: 0, scrollable: false, scrubbing: false, away: arriving(), snap: false };
   rootRef = React.createRef();
+  figureRef = React.createRef();
+  linkRef = React.createRef();
   canvasRef = React.createRef();
   ringRef = React.createRef();
   dockRef = React.createRef();
@@ -124,6 +127,15 @@ class PortfolioLayout extends React.Component {
     window.addEventListener("keydown", this.key);
     window.addEventListener("scroll", this.syncBar, { passive: true });
     window.addEventListener("resize", this.syncBar);
+    // Clicking the blog link sends him off by jetpack to rewrite it (src/shared/jetpack.js), and
+    // coming back from the blog he lands here again. A copy of him does the flying, so this one
+    // steps away until he's back.
+    this.unhook = hookLink(this.linkRef.current, {
+      figure: this.docked,
+      onStart: this.goAway,
+      onRestore: () => this.setState({ away: false }),
+    });
+    arrive({ dock: this.docked, onLanded: this.comeBack });
     const ready = document.fonts ? document.fonts.ready : Promise.resolve();
     ready.then(() =>
       setTimeout(() => {
@@ -135,7 +147,8 @@ class PortfolioLayout extends React.Component {
       setTimeout(() => this.setState((st) => (st.stage < 0 ? { stage: 0 } : null)), 5000),
       setTimeout(() => this.setState((st) => (st.stage === 0 ? { stage: 1 } : null)), 7200),
     ];
-    this.lookTimer = setInterval(() => this.setState((st) => ({ look: (st.look + 1) % 7 })), 1500);
+    // His eyes wander, except while the jetpack copy of him is away (it lands in his current pose)
+    this.lookTimer = setInterval(() => this.setState((st) => (st.away ? null : { look: (st.look + 1) % 7 })), 1500);
   }
 
   componentDidUpdate() {
@@ -154,6 +167,7 @@ class PortfolioLayout extends React.Component {
     window.removeEventListener("keydown", this.key);
     window.removeEventListener("scroll", this.syncBar);
     window.removeEventListener("resize", this.syncBar);
+    this.unhook && this.unhook();
     this.stopIntro && this.stopIntro();
     (this.timers || []).forEach(clearTimeout);
     clearInterval(this.lookTimer);
@@ -528,6 +542,39 @@ class PortfolioLayout extends React.Component {
     );
   };
 
+  // Where he is and how he's standing, for the jetpack copy of him to take over from or hand
+  // back to without a jump
+  docked = () => ({ el: this.figureRef.current, pose: this.figurePose() });
+
+  // His pose for the current stage, in the terms src/shared/jetpack.js uses (degrees, and where
+  // he's looking). The render below draws him from this too.
+  figurePose() {
+    const { stage, look } = this.state;
+    const pulling = stage >= 4;
+    const surprised = stage === 0 || stage === 3;
+    const [ex, ey] = stage === 4 ? [-4, 3] : stage >= 1 && stage < 4 ? [-4, 0] : LOOK[look];
+    return {
+      ex,
+      ey,
+      head: stage === 4 ? -8 : ex * 1.4,
+      armL: surprised ? 140 : pulling ? 80 : 16,
+      armR: pulling ? 98 : -16,
+      oh: surprised ? 1 : 0,
+      tilt: pulling ? 6 : 0,
+    };
+  }
+
+  // Back from the blog: he's landed in exactly this pose, so show this copy of him instantly
+  comeBack = () => {
+    this.setState({ away: false, snap: true });
+    setTimeout(() => this.setState({ snap: false }), 60);
+  };
+
+  goAway = () => {
+    this.tuck();
+    this.setState({ away: true });
+  };
+
   openTools = () => this.setState({ open: true, stage: 5, tool: this.state.tool === "pointer" ? "hl" : this.state.tool });
 
   tuck = () => {
@@ -600,18 +647,18 @@ class PortfolioLayout extends React.Component {
 
   render() {
     // stage: -1 idle, 0 "psst", 1 "?" offered, 2 "?" asked, 3 "take this", 4 holding out the pen, 5 tools opened
-    const { tool, color, penColor, penSize, hlSize, n, stage, open, look, scrollable, scrubbing } = this.state;
+    const { tool, color, penColor, penSize, hlSize, n, stage, open, scrollable, scrubbing, away, snap } = this.state;
     const show = (v) =>
       v ? { rows: "1fr", op: 1, tf: "none" } : { rows: "0fr", op: 0, tf: "translateY(12px) scale(0.85)" };
     const pulling = stage >= 4;
-    const [ex, ey] = stage === 4 ? [-4, 3] : stage >= 1 && stage < 4 ? [-4, 0] : LOOK[look];
-    const surprised = stage === 0 || stage === 3;
+    const pose = this.figurePose();
+    const surprised = pose.oh === 1;
     const fig = {
-      lean: pulling ? "rotate(6deg)" : "none",
-      armL: surprised ? "rotate(140deg)" : pulling ? "rotate(80deg)" : "rotate(16deg)",
-      armR: pulling ? "rotate(98deg)" : "rotate(-16deg)",
-      head: `rotate(${stage === 4 ? -8 : ex * 1.4}deg)`,
-      eyes: `translate(${ex * 1.5}px, ${ey * 1.5}px)`,
+      lean: pose.tilt ? `rotate(${pose.tilt}deg)` : "none",
+      armL: `rotate(${pose.armL}deg)`,
+      armR: `rotate(${pose.armR}deg)`,
+      head: `rotate(${pose.head}deg)`,
+      eyes: `translate(${pose.ex * 1.5}px, ${pose.ey * 1.5}px)`,
     };
     const btn = (id) => (tool === id ? { background: INK, color: PAPER } : { background: "transparent", color: INK });
     const hlc = COLORS[color][1];
@@ -638,8 +685,9 @@ class PortfolioLayout extends React.Component {
       <div ref={this.rootRef} className={s.root}>
         <div className={s.column}>
           <header className={s.header}>
-            <a href="/blog/" className={s.headerLink}>
-              blog
+            {/* Handwritten, like "Go to my homepage" in the same spot on the blog (src/shared/jetpack.css) */}
+            <a ref={this.linkRef} href="/blog/" className="hand-link" data-rewrite="Go to my homepage">
+              Go to my blog
             </a>
           </header>
           <main className={s.main}>
@@ -766,9 +814,11 @@ class PortfolioLayout extends React.Component {
           <div
             className={s.buddy}
             style={
-              open
+              away
+                ? { opacity: 0, transition: "none", pointerEvents: "none" }
+                : open
                 ? { opacity: 0, transform: "translateY(24px)", pointerEvents: "none" }
-                : { opacity: 1, transform: "none", pointerEvents: "auto" }
+                : { opacity: 1, transform: "none", pointerEvents: "auto", transition: snap ? "none" : undefined }
             }
           >
             <div
@@ -813,7 +863,7 @@ class PortfolioLayout extends React.Component {
               </div>
             </div>
 
-            <div className={s.figure}>
+            <div ref={this.figureRef} className={s.figure}>
               {/* Right arm sits behind the pen so the hand appears to hold it */}
               <svg width="70" height="100" viewBox="0 0 70 100" {...figureStroke} className={s.figureBack}>
                 <g filter="url(#hgg-rough)" style={lean}>

@@ -1,8 +1,8 @@
 // The hand-drawn toolkit both pages share: the palette, seeded wobble, highlighter swipes,
 // stroke rendering, and the draw-in animation.
 //
-// Used by the landing page (src/components/layouts/PortfolioLayout.jsx) and the blog's doodles
-// (blog/assets/js/doodles.js). Plain browser JS with no
+// Used by the landing page (src/components/layouts/PortfolioLayout.jsx), the blog's doodles
+// (blog/assets/js/doodles.js), and the jetpack hand-off (./jetpack.js). Plain browser JS with no
 // dependencies: Vite bundles it for the landing page, and Eleventy copies src/shared/ to
 // /blog/assets/js/shared/ for the blog.
 
