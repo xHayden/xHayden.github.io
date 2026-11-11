@@ -128,12 +128,11 @@ body {
   margin-left: 0.25em;
 }
 
+/* Empty box the canvas writes the signature into (see SIGNATURE in PortfolioLayout.jsx) */
 .signature {
-  font-family: "Shantell Sans", cursive;
-  font-size: 26px;
-  transform: rotate(-3deg);
-  transform-origin: left;
   display: block;
+  width: 130px;
+  height: 48px;
   margin-top: 16px;
 }
 
@@ -197,7 +196,8 @@ body {
   overflow: hidden;
   display: flex;
   justify-content: flex-end;
-  padding: 0 14px 0 2px;
+  /* Room for bubble tails on either side, which overflow: hidden would clip */
+  padding: 0 14px;
 }
 
 /* Vertical spacing lives on the bubble so a hidden row collapses all the way to 0px */
@@ -213,7 +213,8 @@ body {
   line-height: 1.2;
   padding: 6px 12px;
   border: 2px solid oklch(0.26 0.02 265);
-  border-radius: 16px 18px 4px 17px / 18px 15px 4px 16px;
+  /* Square corner where the tail joins, so its bottom edge runs straight on from the border */
+  border-radius: 16px 18px 0 17px / 18px 15px 0 16px;
   background: oklch(1 0 0);
   color: oklch(0.26 0.02 265);
   white-space: nowrap;
@@ -228,17 +229,19 @@ body {
   overflow: visible;
 }
 
+.bubbleTailFlip {
+  position: absolute;
+  left: -13px;
+  bottom: -2px;
+  overflow: visible;
+  transform: scaleX(-1);
+}
+
+/* The reader's "?" reply: a .bubble mirrored to the left, filled to show it's tappable */
 .askButton {
   margin-right: 34px;
   min-width: 40px;
-  height: 36px;
-  padding: 0 12px;
-  border: 2px solid oklch(0.26 0.02 265);
-  border-radius: 17px 15px 18px 4px / 15px 18px 16px 4px;
-  font-family: "Shantell Sans", cursive;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 1;
+  border-radius: 18px 16px 17px 0 / 15px 18px 16px 0;
   transform-origin: bottom left;
   transition: opacity 0.3s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
     background 0.3s, color 0.3s;
@@ -346,14 +349,27 @@ body {
   left: 50%;
   translate: -50% 0;
   display: flex;
+  flex-direction: column;
   padding: 3px 5px;
-  border-radius: 999px;
+  border-radius: 22px;
   background: oklch(1 0 0);
   border: 1px solid oklch(0.92 0.01 85);
   box-shadow: 0 10px 24px -12px oklch(0.3 0.03 265 / 0.35),
     0 2px 6px oklch(0.3 0.03 265 / 0.06);
   transform-origin: bottom center;
   transition: opacity 0.2s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Colors on top, the size slider (src/components/SizeSlider.jsx) underneath */
+.swatchRow {
+  display: flex;
+  justify-content: center;
+}
+
+.sizeRow {
+  border-top: 1px solid oklch(0.94 0.008 85);
+  /* Float the size preview above the whole popover, clear of the color row */
+  --preview-lift: 58px;
 }
 
 .swatch {

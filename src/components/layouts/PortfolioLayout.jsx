@@ -1,25 +1,66 @@
 import React from "react";
 import s from "../../style/PortfolioLayout.module.css";
+import SizeSlider from "../SizeSlider";
+import { INK, PAPER, LEMON, HIGHLIGHTERS as COLORS, SPRING, clamp, rng, highlightSwipe, drawStroke, playMarks } from "../../shared/sketch";
+import { FIGURE, PENCIL, ROUGH } from "../../shared/figure";
 
-const INK = "oklch(0.26 0.02 265)";
-const PAPER = "oklch(0.985 0.006 85)";
-const LEMON = "oklch(0.9 0.13 98)";
-const COLORS = [
-  ["Lemon", LEMON],
-  ["Bubblegum", "oklch(0.86 0.11 355)"],
-  ["Mint", "oklch(0.88 0.11 165)"],
-  ["Sky", "oklch(0.86 0.09 235)"],
-];
 const PEN_COLORS = [["Ink", INK], ...COLORS];
-const SPRING = "cubic-bezier(.34,1.56,.64,1)";
+// Brush widths in px; each tool starts at its original width
+const PEN_SIZE = { min: 1.5, max: 8, start: 2.8 };
+const HL_SIZE = { min: 10, max: 40, start: 22 };
+// "– Hayden" as cursive pen strokes, in a 162-wide box starting at (-22, 4). The intro writes it in
+// on the canvas like the other marks, so the eraser can rub it out.
+const SIGNATURE = {
+  x: -22,
+  y: 4,
+  w: 162,
+  paths: [
+    "M-20,34 C-16,33.5 -11,33 -6,33",
+    "M14,8 C12,20 10,32 8,44",
+    "M4,28 C14,26 26,24 34,23",
+    "M37,7 C35,20 33,32 30,44 C34,40 40,32 47,31 C50,30 52,31 53,32 C48,28 41,33 42,39 C43,45 50,43 53,36 L52,44 C54,45 57,42 59,38 C60,35 60,33 60,31 C59,38 60,43 64,43 C68,43 71,37 72,31 L70,48 C68,58 64,64 60,62 C56,60 60,52 68,48 C72,46 76,42 80,38 C84,33 89,30 93,32 C87,28 80,33 81,39 C82,45 89,43 93,36 C95,26 97,14 99,6 C97,18 95,32 93,44 C95,45 98,42 101,38 C106,37 110,34 109,31 C108,28 102,29 101,35 C100,41 104,45 110,43 C112,42 114,40 116,38 C117,35 118,32 119,31 L117,44 C119,36 123,31 127,31 C130,31 130,34 129,38 L128,43 C130,45 134,42 137,38",
+  ],
+};
+let signaturePts = null;
+
+// Sample each signature path into points once (getTotalLength needs the path in a live SVG)
+const signaturePoints = () => {
+  if (signaturePts) return signaturePts;
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("style", "position:absolute;width:0;height:0;visibility:hidden");
+  document.body.appendChild(svg);
+  signaturePts = SIGNATURE.paths.map((d) => {
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("d", d);
+    svg.appendChild(path);
+    const len = path.getTotalLength();
+    const pts = [];
+    for (let l = 0; l < len; l += 1.5) {
+      const q = path.getPointAtLength(l);
+      pts.push([q.x, q.y]);
+    }
+    const end = path.getPointAtLength(len);
+    pts.push([end.x, end.y]);
+    return pts;
+  });
+  svg.remove();
+  return signaturePts;
+};
+
 // Where the figure's eyes wander while idle
 const LOOK = [[0, 0], [-4, -1], [-4, 1], [3, -2], [4, 1], [0, 2], [-2, -2]];
 
-const BubbleTail = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className={s.bubbleTail}>
+// flip puts the tail on the left, for the reader's side of the chat.
+// In the SVG's coordinates the bubble's side border runs down x = 1..3 and its bottom border
+// along y = 12..14. The fill paints over the side border to open the bubble into the tail, and
+// the outline starts and ends on those border centerlines so its round caps stay inside them.
+const BubbleTail = ({ fill = "oklch(1 0 0)", flip = false }) => (
+  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className={flip ? s.bubbleTailFlip : s.bubbleTail}>
+    <path d="M-1 1.5 L2 1.5 C6 5.5 9.5 9 12.5 12.5 L-1 12 Z" fill={fill} style={{ transition: "fill 0.3s" }} />
     <path
-      d="M0 2 C5 6 9 9 13 13 C8 13.5 4 13 0 12"
-      fill="oklch(1 0 0)"
+      d="M2 1.5 C6 5.5 9.5 9 13 13 L2 13"
+      fill="none"
       stroke={INK}
       strokeWidth="2"
       strokeLinecap="round"
@@ -48,7 +89,7 @@ const ToolIcon = ({ children, className = s.toolIcon }) => (
 const figureStroke = {
   fill: "none",
   stroke: INK,
-  strokeWidth: "2.3",
+  strokeWidth: FIGURE.stroke,
   strokeLinecap: "round",
   strokeLinejoin: "round",
   "aria-hidden": "true",
@@ -58,7 +99,7 @@ const figureStroke = {
 // Strokes are stored relative to the page's horizontal center so they stay over the
 // centered text column as the window width changes.
 class PortfolioLayout extends React.Component {
-  state = { tool: "pointer", color: 0, penColor: 0, n: 0, stage: -1, open: false, look: 0, scrollable: false, scrubbing: false };
+  state = { tool: "pointer", color: 0, penColor: 0, penSize: PEN_SIZE.start, hlSize: HL_SIZE.start, n: 0, stage: -1, open: false, look: 0, scrollable: false, scrubbing: false };
   rootRef = React.createRef();
   canvasRef = React.createRef();
   ringRef = React.createRef();
@@ -113,7 +154,7 @@ class PortfolioLayout extends React.Component {
     window.removeEventListener("keydown", this.key);
     window.removeEventListener("scroll", this.syncBar);
     window.removeEventListener("resize", this.syncBar);
-    cancelAnimationFrame(this.raf);
+    this.stopIntro && this.stopIntro();
     (this.timers || []).forEach(clearTimeout);
     clearInterval(this.lookTimer);
   }
@@ -139,18 +180,6 @@ class PortfolioLayout extends React.Component {
     this.layoutBar();
   }
 
-  // Seeded PRNG so each mark wobbles the same way on every load
-  rng(seed) {
-    let a = seed >>> 0;
-    return () => {
-      a |= 0;
-      a = (a + 0x6d2b79f5) | 0;
-      let t = Math.imul(a ^ (a >>> 15), 1 | a);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
   // Turn each [data-mark] element into animated strokes positioned over it
   buildMarks() {
     const root = this.rootRef.current;
@@ -162,7 +191,7 @@ class PortfolioLayout extends React.Component {
     let delay = 0;
     root.querySelectorAll("[data-mark]").forEach((el, i) => {
       const type = el.getAttribute("data-mark");
-      const r = this.rng(i * 7919 + 13);
+      const r = rng(i * 7919 + 13);
       const add = (m, dur) => {
         m.g = i;
         m.delay = delay;
@@ -178,18 +207,8 @@ class PortfolioLayout extends React.Component {
         Array.from(range.getClientRects())
           .filter((q) => q.width > 2)
           .forEach((q) => {
-            const w = q.height * 0.72;
-            const y = q.top + q.height * 0.56;
-            const tilt = (r() - 0.5) * 3;
-            const inset = w / 2 - 3;
-            const x0 = q.left + inset;
-            const span = Math.max(1, q.width - inset * 2);
-            const pts = [];
-            for (let k = 0; k <= 14; k++) {
-              const t = k / 14;
-              pts.push(L(x0 + t * span, y + tilt * (t - 0.5) + (r() - 0.5) * 1.2));
-            }
-            add({ t: "hl", c, w, pts }, 520);
+            const { w, pts } = highlightSwipe(q, r);
+            add({ t: "hl", c, w, pts: pts.map(([x, y]) => L(x, y)) }, 520);
           });
       } else if (type === "bangs") {
         const q = el.getBoundingClientRect();
@@ -209,6 +228,22 @@ class PortfolioLayout extends React.Component {
           );
           add({ t: "pen", c: INK, w: 3.2, pts: [L(x - lean * 0.2, q.top + h * 0.86)] }, 40);
         });
+      } else if (type === "signature") {
+        // Scale the signature into its box, tilted up 3° around the box's left middle
+        const q = el.getBoundingClientRect();
+        const k = q.width / SIGNATURE.w;
+        const a = (-3 * Math.PI) / 180;
+        const cos = Math.cos(a);
+        const sin = Math.sin(a);
+        const cy = q.top + q.height / 2;
+        signaturePoints().forEach((pts) => {
+          const out = pts.map(([px, py]) => {
+            const x = (px - SIGNATURE.x) * k;
+            const y = (py - SIGNATURE.y) * k - q.height / 2;
+            return L(q.left + x * cos - y * sin, cy + x * sin + y * cos);
+          });
+          add({ t: "pen", c: INK, w: 2.4, pts: out }, Math.max(120, pts.length * 1.5 * k * 3.5));
+        });
       }
     });
     this.marks.forEach((m) => {
@@ -218,22 +253,14 @@ class PortfolioLayout extends React.Component {
   }
 
   playIntro() {
-    cancelAnimationFrame(this.raf);
+    this.stopIntro && this.stopIntro();
     this.introDone = false;
     this.marks.forEach((m) => (m.p = 0));
-    const start = performance.now();
-    const tick = (now) => {
-      let done = true;
-      this.marks.forEach((m) => {
-        const t = Math.max(0, Math.min(1, (now - start - m.delay) / m.dur));
-        m.p = 1 - Math.pow(1 - t, 3);
-        if (t < 1) done = false;
-      });
-      this.draw();
-      if (done) this.introDone = true;
-      else this.raf = requestAnimationFrame(tick);
-    };
-    this.raf = requestAnimationFrame(tick);
+    this.stopIntro = playMarks(
+      () => this.marks,
+      () => this.draw(),
+      () => (this.introDone = true)
+    );
   }
 
   req() {
@@ -252,29 +279,9 @@ class PortfolioLayout extends React.Component {
     ctx.globalCompositeOperation = "source-over";
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.setTransform(this.d, 0, 0, this.d, (this.d * this.w) / 2, 0);
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    this.marks.forEach((m) => this.stroke(ctx, m, Math.ceil(m.pts.length * m.p)));
-    this.strokes.forEach((st) => this.stroke(ctx, st, st.pts.length));
+    this.marks.forEach((m) => drawStroke(ctx, m, Math.ceil(m.pts.length * m.p)));
+    this.strokes.forEach((st) => drawStroke(ctx, st));
     ctx.globalCompositeOperation = "source-over";
-  }
-
-  stroke(ctx, st, n) {
-    if (n < 1) return;
-    const p = st.pts;
-    ctx.globalCompositeOperation = st.t === "er" ? "destination-out" : "source-over";
-    ctx.strokeStyle = st.t === "er" ? "#000" : st.c;
-    ctx.lineWidth = st.w;
-    ctx.beginPath();
-    ctx.moveTo(p[0][0], p[0][1]);
-    if (n === 1) ctx.lineTo(p[0][0] + 0.01, p[0][1]);
-    for (let i = 1; i < n - 1; i++) {
-      const mx = (p[i][0] + p[i + 1][0]) / 2;
-      const my = (p[i][1] + p[i + 1][1]) / 2;
-      ctx.quadraticCurveTo(p[i][0], p[i][1], mx, my);
-    }
-    if (n > 1) ctx.lineTo(p[n - 1][0], p[n - 1][1]);
-    ctx.stroke();
   }
 
   local(x, y) {
@@ -291,9 +298,9 @@ class PortfolioLayout extends React.Component {
     } catch (_) {}
     const [x, y] = this.local(e.clientX, e.clientY);
     let st;
-    if (tool === "pen") st = { t: "pen", c: PEN_COLORS[this.state.penColor][1], w: 2.8, pts: [[x, y]] };
+    if (tool === "pen") st = { t: "pen", c: PEN_COLORS[this.state.penColor][1], w: this.state.penSize, pts: [[x, y]] };
     else if (tool === "er") st = { t: "er", w: 40, pts: [[x, y]] };
-    else st = { t: "hl", c: COLORS[this.state.color][1], w: 22, pts: [[x, y]] };
+    else st = { t: "hl", c: COLORS[this.state.color][1], w: this.state.hlSize, pts: [[x, y]] };
     this.cur = st;
     this.strokes.push(st);
     this.req();
@@ -344,6 +351,16 @@ class PortfolioLayout extends React.Component {
     const m = { v: "pointer", escape: "pointer", p: "pen", h: "hl", e: "er" };
     if (m[k]) this.setTool(m[k]);
     else if (["1", "2", "3", "4"].includes(k)) this.setState({ color: +k - 1, tool: "hl", open: true, stage: 5 });
+    else if (k === "[" || k === "]") {
+      // [ and ] step the current tool's size by a tenth of its range, like most drawing apps.
+      // Updater form, so quick presses (or "h" then "[") each see the latest tool and size.
+      this.setState((st) => {
+        if (st.tool !== "pen" && st.tool !== "hl") return null;
+        const [key, range] = st.tool === "pen" ? ["penSize", PEN_SIZE] : ["hlSize", HL_SIZE];
+        const step = ((range.max - range.min) / 10) * (k === "]" ? 1 : -1);
+        return { [key]: clamp(st[key] + step, range.min, range.max) };
+      });
+    }
   };
 
   // Topmost user stroke or intro mark under (x, y), in canvas-local coordinates
@@ -534,8 +551,31 @@ class PortfolioLayout extends React.Component {
     this.playIntro();
   };
 
-  // Colors pop up above a tool's button instead of widening the toolbar
-  colorPicker(colors, selected, show, pick, kind, className = "") {
+  // A tool's colors, with its size slider underneath, pop up above its button instead of
+  // widening the toolbar. size: { min, max, value, color, onChange } for the SizeSlider.
+  colorPicker(colors, selected, show, pick, kind, className = "", size) {
+    const swatch = (key, label, i, active, onClick, dot) => (
+      <button
+        type="button"
+        key={key}
+        title={label}
+        aria-label={`${label} ${kind}`}
+        aria-pressed={active}
+        tabIndex={show ? 0 : -1}
+        onClick={onClick}
+        className={s.swatch}
+      >
+        <span
+          className={s.swatchDot}
+          style={{
+            ...dot,
+            boxShadow: active ? `0 0 0 2px oklch(1 0 0), 0 0 0 4px ${INK}` : "none",
+            transform: !show ? "scale(0.3)" : active ? "scale(1.08)" : "none",
+            transitionDelay: show ? `${60 + i * 40}ms` : "0ms",
+          }}
+        />
+      </button>
+    );
     return (
       <div
         className={`${s.swatches} ${className}`}
@@ -546,34 +586,21 @@ class PortfolioLayout extends React.Component {
             : { opacity: 0, transform: "translateY(10px) scale(0.8)", pointerEvents: "none" }
         }
       >
-        {colors.map(([name, css], i) => (
-          <button
-            type="button"
-            key={name}
-            title={name}
-            aria-label={`${name} ${kind}`}
-            tabIndex={show ? 0 : -1}
-            onClick={() => pick(i)}
-            className={s.swatch}
-          >
-            <span
-              className={s.swatchDot}
-              style={{
-                background: css,
-                boxShadow: i === selected ? `0 0 0 2px oklch(1 0 0), 0 0 0 4px ${INK}` : "none",
-                transform: !show ? "scale(0.3)" : i === selected ? "scale(1.08)" : "none",
-                transitionDelay: show ? `${60 + i * 40}ms` : "0ms",
-              }}
-            />
-          </button>
-        ))}
+        <div className={s.swatchRow}>
+          {colors.map(([name, css], i) => swatch(name, name, i, i === selected, () => pick(i), { background: css }))}
+        </div>
+        {size && (
+          <div className={s.sizeRow}>
+            <SizeSlider label={`${kind} size`} tabIndex={show ? 0 : -1} {...size} />
+          </div>
+        )}
       </div>
     );
   }
 
   render() {
     // stage: -1 idle, 0 "psst", 1 "?" offered, 2 "?" asked, 3 "take this", 4 holding out the pen, 5 tools opened
-    const { tool, color, penColor, n, stage, open, look, scrollable, scrubbing } = this.state;
+    const { tool, color, penColor, penSize, hlSize, n, stage, open, look, scrollable, scrubbing } = this.state;
     const show = (v) =>
       v ? { rows: "1fr", op: 1, tf: "none" } : { rows: "0fr", op: 0, tf: "translateY(12px) scale(0.85)" };
     const pulling = stage >= 4;
@@ -594,9 +621,9 @@ class PortfolioLayout extends React.Component {
       tool === "pointer"
         ? { size: 10, background: "transparent", border: "none", opacity: 0 }
         : tool === "pen"
-        ? { size: 8, background: PEN_COLORS[penColor][1], border: "none", opacity: 1 }
+        ? { size: 5 + penSize, background: PEN_COLORS[penColor][1], border: "none", opacity: 1 }
         : tool === "hl"
-        ? { size: 24, background: hlc, border: "none", opacity: 0.9 }
+        ? { size: 2 + hlSize, background: hlc, border: "none", opacity: 0.9 }
         : { size: 40, background: "oklch(1 0 0 / 0.5)", border: "1.5px solid " + INK, opacity: 1 };
     const m0 = show(stage >= 0 && stage < 3);
     const m1 = show(stage >= 1 && stage < 3);
@@ -688,7 +715,7 @@ class PortfolioLayout extends React.Component {
               </a>
               .
             </p>
-            <span className={s.signature}>– Hayden</span>
+            <span data-mark="signature" role="img" aria-label="– Hayden" className={s.signature} />
           </main>
           <div className={s.spacer} />
         </div>
@@ -761,7 +788,7 @@ class PortfolioLayout extends React.Component {
                     type="button"
                     aria-label="Reply with a question mark"
                     onClick={this.ask}
-                    className={s.askButton}
+                    className={`${s.bubble} ${s.askButton}`}
                     style={{
                       opacity: m1.op,
                       transform: m1.tf,
@@ -772,6 +799,7 @@ class PortfolioLayout extends React.Component {
                     }}
                   >
                     ?
+                    <BubbleTail flip fill={asked ? INK : LEMON} />
                   </button>
                 </div>
               </div>
@@ -796,7 +824,7 @@ class PortfolioLayout extends React.Component {
                       transform: fig.armR,
                     }}
                   >
-                    <path d="M35 60 C34 64 36 68 34.5 74" />
+                    <path d={FIGURE.armR} />
                   </g>
                 </g>
               </svg>
@@ -814,33 +842,36 @@ class PortfolioLayout extends React.Component {
                   viewBox="0 0 66 24"
                   fill="none"
                   stroke={INK}
-                  strokeWidth="2"
+                  strokeWidth={PENCIL.stroke}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
                 >
                   <g filter="url(#hgg-rough)">
-                    <path
-                      d="M14 6 C28 5.5 44 5.5 60 6.5 C62.5 7 62.5 17 60 17.5 C44 18.5 28 18.5 14 18 Z"
-                      fill={LEMON}
-                    />
-                    <path d="M50 6.2 C50.8 10 50.8 14 50 17.8" />
-                    <path d="M14 6.5 L4.5 11.5 L14 17.5" fill={PAPER} />
-                    <path d="M8 9.8 L4.5 11.5 L8 13.4" fill={INK} />
+                    <path d={PENCIL.body} fill={LEMON} />
+                    <path d={PENCIL.band} />
+                    <path d={PENCIL.wood} fill={PAPER} />
+                    <path d={PENCIL.lead} fill={INK} />
                   </g>
                 </svg>
               </button>
               <svg width="70" height="100" viewBox="0 0 70 100" {...figureStroke} className={s.figureFront}>
                 <defs>
                   <filter id="hgg-rough" x="-10%" y="-10%" width="120%" height="120%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="3" />
-                    <feDisplacementMap in="SourceGraphic" scale="2.2" />
+                    <feTurbulence
+                      type="fractalNoise"
+                      baseFrequency={ROUGH.baseFrequency}
+                      numOctaves={ROUGH.numOctaves}
+                      seed={ROUGH.seed}
+                    />
+                    <feDisplacementMap in="SourceGraphic" scale={ROUGH.scale} />
                   </filter>
                 </defs>
                 <g filter="url(#hgg-rough)" style={lean}>
-                  <path d="M35 74 C33 80 31 87 28.5 93 L24 94.5" />
-                  <path d="M35.5 74 C37.5 80 40 87 42 93 L46.5 93.5" />
-                  <path d="M35 55 C34 61 36 68 35 74" />
+                  {FIGURE.legs.map((d) => (
+                    <path key={d} d={d} />
+                  ))}
+                  <path d={FIGURE.body} />
                   <g
                     style={{
                       transformOrigin: "35px 60px",
@@ -848,25 +879,17 @@ class PortfolioLayout extends React.Component {
                       transform: fig.armL,
                     }}
                   >
-                    <path d="M35 60 C36 64 34 68 35.5 74" />
+                    <path d={FIGURE.armL} />
                   </g>
                   <g style={{ transformOrigin: "35px 55px", transition: `transform .7s ${SPRING}`, transform: fig.head }}>
-                    <path
-                      d="M52.6 8.9 C42.4 0.1 18.8 0.8 11.5 13.3 C4.1 25.8 8.5 45.6 23.2 51.5 C36.5 56.7 55.6 50.1 60 35.4 C63.7 22.1 57.8 11.8 46.8 5.2"
-                      fill={PAPER}
-                    />
+                    <path d={FIGURE.head} fill={PAPER} />
                     <g style={{ transition: `transform .5s ${SPRING}`, transform: fig.eyes }}>
-                      <path d="M26.2 25.8 L26.5 29.2" strokeWidth="3.4" />
-                      <path d="M43.1 25.1 L43.2 28.6" strokeWidth="3.4" />
+                      {FIGURE.eyes.map((d) => (
+                        <path key={d} d={d} strokeWidth="3.4" />
+                      ))}
                     </g>
-                    <path
-                      d="M29.9 39.8 C32.8 41.2 38 41.2 40.1 39.1"
-                      style={{ transition: "opacity .3s", opacity: surprised ? 0 : 1 }}
-                    />
-                    <path
-                      d="M33.5 38.3 C32 40.5 33.5 42.7 35.7 42 C37.9 41.3 37.2 37.6 34.3 38.1"
-                      style={{ transition: "opacity .3s", opacity: surprised ? 1 : 0 }}
-                    />
+                    <path d={FIGURE.smile} style={{ transition: "opacity .3s", opacity: surprised ? 0 : 1 }} />
+                    <path d={FIGURE.oh} style={{ transition: "opacity .3s", opacity: surprised ? 1 : 0 }} />
                   </g>
                 </g>
               </svg>
@@ -914,7 +937,13 @@ class PortfolioLayout extends React.Component {
                   showPenColors,
                   (i) => this.setState({ penColor: i, tool: "pen" }),
                   "pen",
-                  s.swatchesStart
+                  s.swatchesStart,
+                  {
+                    ...PEN_SIZE,
+                    value: penSize,
+                    color: PEN_COLORS[penColor][1],
+                    onChange: (v) => this.setState({ penSize: v, tool: "pen" }),
+                  }
                 )}
               </div>
               <div className={s.toolGroup}>
@@ -931,7 +960,12 @@ class PortfolioLayout extends React.Component {
                   </ToolIcon>
                   <span className={s.label}>Highlight</span>
                 </button>
-                {this.colorPicker(COLORS, color, showColors, (i) => this.setState({ color: i, tool: "hl" }), "highlighter")}
+                {this.colorPicker(COLORS, color, showColors, (i) => this.setState({ color: i, tool: "hl" }), "highlighter", "", {
+                  ...HL_SIZE,
+                  value: hlSize,
+                  color: hlc,
+                  onChange: (v) => this.setState({ hlSize: v, tool: "hl" }),
+                })}
               </div>
               <button
                 type="button"

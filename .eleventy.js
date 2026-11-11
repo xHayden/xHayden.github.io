@@ -4,6 +4,10 @@ const includesFilter = require("./blog/includes");
 
 module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy("blog/assets/images/");
+    eleventyConfig.addPassthroughCopy("blog/assets/js/");
+    // Modules both pages use (see src/shared/sketch.js); the blog imports them from ./shared/
+    eleventyConfig.addPassthroughCopy({ "src/shared": "assets/js/shared" });
+    eleventyConfig.addWatchTarget("src/shared/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/themes/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/main.css");
     eleventyConfig.addPassthroughCopy("blog/admin/");
