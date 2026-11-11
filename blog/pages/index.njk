@@ -10,11 +10,16 @@ canonical: https://hayden.gg/blog/
 
 {% headers "Latest Posts", "of things I'm working on or find cool"%}
 
-<ul class="blog-list">
+<ul class="post-list">
     {% for post in collections.visiblePost | sortByDate %}
         <li>
-            <a href="{{ post.url | urlPrefix | url }}">{{ post.data.title }}</a>
-            <p>{{post.date | postDate}}</p>
+            <a href="{{ post.url | urlPrefix | url }}">
+                <span class="post-title">{{ post.data.title }}</span>
+                <time datetime="{{ post.date | sitemapDate }}">{{ post.date | postDate }}</time>
+            </a>
         </li>
     {% endfor %}
 </ul>
+
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400..600&display=swap" rel="stylesheet">
+<script type="module" src="{{ 'assets/js/doodles.js' | urlPrefix | url }}"></script>

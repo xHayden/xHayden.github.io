@@ -4,6 +4,10 @@ const includesFilter = require("./blog/includes");
 
 module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy("blog/assets/images/");
+    eleventyConfig.addPassthroughCopy("blog/assets/js/");
+    // Modules both pages use (see src/shared/sketch.js); the blog imports them from ./shared/
+    eleventyConfig.addPassthroughCopy({ "src/shared": "assets/js/shared" });
+    eleventyConfig.addWatchTarget("src/shared/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/themes/");
     eleventyConfig.addPassthroughCopy("blog/assets/css/main.css");
     eleventyConfig.addPassthroughCopy("blog/admin/");
@@ -19,8 +23,7 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addShortcode(
         "headers",
         (title, subtitle) =>
-          `<h1 class="m-0 p-0">${title}</h1>
-            <p class="">${subtitle}</p>`
+          `<div class="page-intro"><h1>${title}</h1>${subtitle ? `<p>${subtitle}</p>` : ""}</div>`
     );
 
     eleventyConfig.addShortcode(

@@ -3,14 +3,38 @@
 @tailwind utilities;
 
 @layer base {
+    /* Same palette and type as the landing page (src/style/PortfolioLayout.module.css) */
+    :root {
+        --paper: oklch(0.985 0.006 85);
+        --paper-deep: oklch(0.955 0.008 85);
+        --ink: oklch(0.26 0.02 265);
+        --ink-soft: oklch(0.36 0.02 265);
+        --muted: oklch(0.5 0.02 265);
+        --rule: oklch(0.9 0.01 85);
+        --underline: oklch(0.8 0.01 265);
+        --highlight: oklch(0.9 0.13 98);
+        --sans: Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
+        --display: "Bricolage Grotesque", Figtree, system-ui, sans-serif;
+        --mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, monospace;
+    }
     body {
-        @apply bg-white text-gray-900 ;
-        @apply flex justify-center flex-col items-center;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+    }
+    ::selection {
+        background: var(--highlight);
+    }
+    .column {
+        box-sizing: content-box;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 clamp(24px, 5vw, 48px) 64px;
     }
     p, li {
-        @apply text-base md:text-lg text-gray-700;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        @apply text-base md:text-lg;
+        color: var(--ink-soft);
         line-height: 1.6;
     }
     h1, h2, h3, h4 {
@@ -35,6 +59,12 @@
     h1, h2, h3, h4, p, pre, img, ol, ul, blockquote {
         line-height: 1.5em;
     }
+    h1, h2, h3 {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+    }
     pre {
         @apply my-8 !important;
     }
@@ -42,18 +72,18 @@
         @apply text-sm md:text-base !important;
     }
     code {
-        @apply text-gray-800 bg-gray-100 px-1 py-0.5 rounded;
-        font-family: "SF Mono", Menlo, Monaco, "Cascadia Code", "Liberation Mono", "Courier New", monospace;
-    }
-    h1, h2, h3 {
-        @apply font-bold text-gray-900;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        @apply px-1 py-0.5 rounded;
+        color: var(--ink);
+        background: var(--paper-deep);
+        font-family: var(--mono);
     }
     blockquote {
-        @apply px-6 py-4 border-l-4 border-gray-300 bg-gray-50 rounded-r-lg;
+        @apply px-6 py-4 border-l-4 rounded-r-lg;
+        border-color: var(--rule);
+        background: var(--paper-deep);
     }
     blockquote p {
-        @apply m-0 font-normal leading-relaxed text-gray-700 italic;
+        @apply m-0 font-normal leading-relaxed italic;
     }
     ul {
         @apply list-disc list-inside;
@@ -67,31 +97,107 @@
     ol li {
         @apply pl-4;
     }
-    .blog-list {
-        @apply space-y-3 list-none;
-    }
-    .blog-list li {
-        @apply py-3 px-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200 -mx-4;
-    }
-    .blog-list li:last-child {
-        @apply border-b-0;
-    }
-    .blog-list li a {
-        @apply font-medium text-gray-900 hover:text-indigo-600 no-underline;
-    }
-    .blog-list li p {
-        @apply text-sm text-gray-500 mt-1 mb-0;
-    }
     a {
-        @apply text-indigo-600 hover:text-indigo-800 transition-colors duration-200;
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+        text-decoration-color: var(--underline);
+        transition: text-decoration-color 0.2s;
     }
-    nav {
-        @apply flex justify-start gap-4 py-6;
+    a:hover {
+        text-decoration-color: currentColor;
     }
-    main, .page-sizing {
-        @apply w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-2/5; 
+
+    .site-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 32px 0;
+        font-size: 16px;
+        color: var(--muted);
     }
-    nav a {
-        @apply text-gray-900 hover:text-gray-600 transition-colors duration-200;
+    /* Same as the landing page's header, so the handwritten links sit in the same spot */
+    @media (max-width: 640px) {
+        .site-header {
+            padding: 24px 0;
+        }
+    }
+    .site-header nav {
+        display: flex;
+        gap: 20px;
+    }
+    .site-header a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .site-header a:hover,
+    .site-header a[aria-current="page"] {
+        color: var(--ink);
+    }
+
+    /* Page title block from the `headers` shortcode */
+    .page-intro {
+        margin: clamp(8px, 3vh, 32px) 0 32px;
+    }
+    .page-intro h1 {
+        margin: 0;
+        font-size: clamp(36px, 5vw, 48px);
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+    }
+    .page-intro p {
+        margin: 12px 0 0;
+        color: var(--muted);
+    }
+
+    /* Post list on the blog index */
+    .post-list {
+        list-style: none;
+        margin: 0;
+    }
+    .post-list li {
+        padding: 0;
+    }
+    .post-list li + li {
+        border-top: 1px solid var(--rule);
+    }
+    .post-list a {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 18px 0;
+        text-decoration: none;
+    }
+    @media (min-width: 640px) {
+        .post-list a {
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 24px;
+        }
+    }
+    .post-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+        line-height: 1.4;
+        text-wrap: pretty;
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+        text-decoration-color: transparent;
+        transition: text-decoration-color 0.2s;
+    }
+    .post-list a:hover .post-title {
+        text-decoration-color: var(--underline);
+    }
+    .post-list time {
+        flex-shrink: 0;
+        font-size: 15px;
+        font-variant-numeric: tabular-nums;
+        color: var(--muted);
+        white-space: nowrap;
     }
 }
