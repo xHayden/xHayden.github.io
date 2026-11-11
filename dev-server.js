@@ -26,6 +26,11 @@ async function startServer() {
           route: '/blog',
           dir: '_site_blog'
         }],
+        // Only the blog live-reloads through Browsersync. The landing page has Vite's own HMR, and
+        // with the snippet it reloaded on every blog rebuild too.
+        snippetOptions: {
+          blacklist: ['/', '/index.html'],
+        },
     });
 
     // Use Vite's middleware
